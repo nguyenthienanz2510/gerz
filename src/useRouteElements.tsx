@@ -3,12 +3,17 @@ import Login from './pages/Login'
 import HomePage from './pages/HomePage'
 import Register from './pages/Register'
 import RegisterLayout from './layouts/RegisterLayout'
+import MainLayout from './layouts/MainLayout'
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
     {
       path: '/',
-      element: <HomePage />
+      element: (
+        <MainLayout>
+          <HomePage />
+        </MainLayout>
+      )
     },
     {
       path: '/login',
