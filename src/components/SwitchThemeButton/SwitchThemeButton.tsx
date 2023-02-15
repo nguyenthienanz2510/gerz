@@ -12,7 +12,13 @@ export default function SwitchThemeButton() {
 
   return (
     <>
-      <DarkModeSwitch checked={darkMode} onChange={toggleDarkMode} size={24} />
+      <DarkModeSwitch
+        id='react-toggle-dark-mode'
+        checked={darkMode}
+        onChange={toggleDarkMode}
+        color={'#FEFFFF'}
+        size={24}
+      />
     </>
   )
 }

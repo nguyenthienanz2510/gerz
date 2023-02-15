@@ -3,6 +3,7 @@
 html {
   height: 100%;
   line-height: 1.4;
+  transition: all linear 0.3s;
 }
 
 body {
@@ -18,7 +19,7 @@ html.light {
 
 html.dark {
   color: $color-text-light;
-  background-color: $color-bg-dark-primary;
+  background-color: $color-bg-dark-secondary;
 }
 
 ::selection {
@@ -35,6 +36,6 @@ html.dark {
 a {
   transition: all 0.3s;
   &:hover {
-    color: $color-primary;
+    color: $color-primary !important;
   }
 }

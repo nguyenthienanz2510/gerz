@@ -29,10 +29,8 @@ module.exports = {
         'color-info': '#17a2b8',
         'color-warning': '#ffc107',
         'color-danger': '#cf304a',
-        'color-bg-dark-primary': '#10141c',
-        'color-bg-dark-secondary': '#161b26',
-        'color-bg-dark-secondary-active': '#222733',
-        'color-bg-dark-header': '#000b27',
+        'color-bg-dark-primary': '#1d1e23',
+        'color-bg-dark-secondary': '#121215',
         'color-border-primary': '#eaeaea'
       },
       fontSize: {

@@ -21,15 +21,16 @@ const dataNavbar = [
 
 export default function Navbar() {
   return (
-    <div>
+    <div className='text-color-text-light'>
       {dataNavbar.map((item) => (
         <NavLink
-          className={({ isActive }) => (isActive ? 'text-color-primary' : undefined) + ' px-2'}
+          className={({ isActive }) =>
+            (isActive ? 'nav-link-hover-effect--active' : undefined) + ' nav-link-hover-effect mr-12 text-12 uppercase'
+          }
           key={item.slug}
           to={item.slug}
         >
           {item.name}
-
         </NavLink>
       ))}
     </div>

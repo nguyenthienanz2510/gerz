@@ -8,7 +8,7 @@ interface MainLayoutProps {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <div className='flex flex-col bg-white dark:bg-color-bg-dark-primary'>
+    <div className='flex flex-col bg-white dark:bg-color-bg-dark-secondary'>
       <MainHeader />
       <main className='container mx-auto min-h-screen py-12'>{children}</main>
       <MainFooter />

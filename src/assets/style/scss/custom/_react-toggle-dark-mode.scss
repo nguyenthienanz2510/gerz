@@ -1,0 +1,6 @@
+#react-toggle-dark-mode {
+  transition: all 0.3s;
+  &:hover {
+    color: $color-primary !important;
+  }
+}

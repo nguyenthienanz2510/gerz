@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import Register from './pages/Register'
 import RegisterLayout from './layouts/RegisterLayout'
 import MainLayout from './layouts/MainLayout'
+import NotFound from './pages/NotFound'
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
@@ -30,6 +31,10 @@ export default function useRouteElements() {
           <Register />
         </RegisterLayout>
       )
+    },
+    {
+      path: '*',
+      element: <NotFound />
     }
   ])
   return routeElements
