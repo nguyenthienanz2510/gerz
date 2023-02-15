@@ -26,6 +26,7 @@ module.exports = {
         'color-black': '#000000',
         'color-text-light': '#feffff',
         'color-text-dark': '#1e2329',
+        'color-text-dark-secondary': '#6B7280',
         'color-success': '#03a66d',
         'color-info': '#17a2b8',
         'color-warning': '#ffc107',

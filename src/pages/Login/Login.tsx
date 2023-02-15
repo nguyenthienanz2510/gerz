@@ -9,49 +9,22 @@ export default function Login() {
         </h1>
         <form className='space-y-4 md:space-y-6' action='#'>
           <div>
-            <label htmlFor='email' className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'>
-              Your email
-            </label>
             <input
               type='email'
               name='email'
               id='email'
+              placeholder='Your email'
               className='focus:border-color block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-color-text-dark ring-color-primary focus:border-color-primary dark:border-gray-600 dark:bg-gray-700 dark:text-color-text-light dark:placeholder-gray-300 dark:focus:border-color-primary dark:focus:ring-color-primary sm:text-sm'
-              placeholder='name@company.com'
-              required
             />
           </div>
           <div>
-            <label htmlFor='password' className='mb-2 block text-sm font-medium text-gray-900 dark:text-white'>
-              Password
-            </label>
             <input
               type='password'
               name='password'
               id='password'
-              placeholder='••••••••'
+              placeholder='Password'
               className='focus:border-color block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-color-text-dark ring-color-primary focus:border-color-primary dark:border-gray-600 dark:bg-gray-700 dark:text-color-text-light dark:placeholder-gray-300 dark:focus:border-color-primary dark:focus:ring-color-primary sm:text-sm'
-              required
             />
-          </div>
-          <div className='flex items-center justify-between'>
-            <div className='flex items-start'>
-              <div className='flex h-5 items-center'>
-                <input
-                  id='remember'
-                  aria-describedby='remember'
-                  type='checkbox'
-                  className='focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 h-4 w-4 rounded border border-gray-300 bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800'
-                  required
-                />
-              </div>
-              <div className='ml-3 text-sm'>
-                <label htmlFor='remember' className='text-gray-500 dark:text-gray-300'>
-                  Remember me
-                </label>
-              </div>
-            </div>
-            <Link to={'forgot-password'}>Forgot password?</Link>
           </div>
           <button
             type='submit'
@@ -60,7 +33,10 @@ export default function Login() {
             Sign in
           </button>
           <p className='text-sm font-light text-gray-500 dark:text-gray-400'>
-            Don’t have an account yet? <Link to={'/register'}>Register</Link>
+            Don’t have an account yet?{' '}
+            <Link to={'/register'}>
+              <span className='text-color-primary transition-all hover:underline'>Register</span>
+            </Link>
           </p>
         </form>
       </div>
