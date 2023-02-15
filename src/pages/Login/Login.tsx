@@ -12,7 +12,6 @@ export default function Login() {
             <input
               type='email'
               name='email'
-              id='email'
               placeholder='Your email'
               className='focus:border-color block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-color-text-dark ring-color-primary focus:border-color-primary dark:border-gray-600 dark:bg-gray-700 dark:text-color-text-light dark:placeholder-gray-300 dark:focus:border-color-primary dark:focus:ring-color-primary sm:text-sm'
             />
@@ -21,7 +20,7 @@ export default function Login() {
             <input
               type='password'
               name='password'
-              id='password'
+              autoComplete='on'
               placeholder='Password'
               className='focus:border-color block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-color-text-dark ring-color-primary focus:border-color-primary dark:border-gray-600 dark:bg-gray-700 dark:text-color-text-light dark:placeholder-gray-300 dark:focus:border-color-primary dark:focus:ring-color-primary sm:text-sm'
             />
