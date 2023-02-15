@@ -1,5 +1,5 @@
 import React from 'react'
-import Header from './Header'
+import HeaderRegister from '../../components/Layout/HeaderRegister'
 import Lottie from 'react-lottie'
 import sell_and_buy_json from 'src/assets/lotties/sell-and-buy.json'
 
@@ -10,15 +10,18 @@ interface RegisterLayoutProps {
 export default function RegisterLayout({ children }: RegisterLayoutProps) {
   return (
     <div>
-      <Header />
+      <HeaderRegister />
       <main className='container mx-auto'>
-        <div className='mx-auto mt-32 grid max-w-3xl grid-cols-2 gap-5'>
+        <div className='mx-auto mt-32 grid max-w-4xl grid-cols-2 gap-10'>
           <div className='col-span-1 hidden sm:block'>
             <Lottie
               options={{
                 loop: true,
                 autoplay: true,
-                animationData: sell_and_buy_json
+                animationData: sell_and_buy_json,
+                rendererSettings: {
+                  preserveAspectRatio: 'xMidYMid slice'
+                }
               }}
               speed={0.5}
             />

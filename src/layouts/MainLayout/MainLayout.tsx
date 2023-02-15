@@ -1,6 +1,6 @@
 import React from 'react'
-import Footer from './Footer'
-import Header from './Header'
+import MainFooter from '../../components/Layout/MainFooter'
+import MainHeader from '../../components/Layout/MainHeader'
 
 interface MainLayoutProps {
   children?: React.ReactNode
@@ -9,9 +9,9 @@ interface MainLayoutProps {
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className='flex flex-col bg-white dark:bg-color-bg-dark-primary'>
-      <Header />
+      <MainHeader />
       <main className='container mx-auto min-h-screen py-12'>{children}</main>
-      <Footer />
+      <MainFooter />
     </div>
   )
 }
