@@ -27,8 +27,10 @@ export default function MainHeader() {
           <div className='ml-5 flex'>
             <SwitchThemeButton />
             <div className='ml-3 flex items-center'>
-              <Link to={'/login'}>Login</Link>
-              <Link to={'/register'}>/Register</Link>
+              <Link to={'/login'}>Login/</Link>
+              <Link to={'/register'} className='ml-1'>
+                Register
+              </Link>
             </div>
           </div>
         </div>

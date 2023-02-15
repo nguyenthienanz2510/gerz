@@ -33,9 +33,17 @@ html.dark {
   color: $color-white;
 }
 
+:focus-visible {
+  outline: none;
+}
+
 a {
   transition: all 0.3s;
   &:hover {
     color: $color-primary !important;
   }
+}
+
+input[type='checkbox'] {
+  accent-color: $color-primary;
 }

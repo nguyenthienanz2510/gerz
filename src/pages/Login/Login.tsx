@@ -16,7 +16,7 @@ export default function Login() {
               type='email'
               name='email'
               id='email'
-              className='focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm'
+              className='focus:border-color block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-color-text-dark ring-color-primary focus:border-color-primary dark:border-gray-600 dark:bg-gray-700 dark:text-color-text-light dark:placeholder-gray-300 dark:focus:border-color-primary dark:focus:ring-color-primary sm:text-sm'
               placeholder='name@company.com'
               required
             />
@@ -30,7 +30,7 @@ export default function Login() {
               name='password'
               id='password'
               placeholder='••••••••'
-              className='focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm'
+              className='focus:border-color block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-color-text-dark ring-color-primary focus:border-color-primary dark:border-gray-600 dark:bg-gray-700 dark:text-color-text-light dark:placeholder-gray-300 dark:focus:border-color-primary dark:focus:ring-color-primary sm:text-sm'
               required
             />
           </div>
@@ -55,7 +55,7 @@ export default function Login() {
           </div>
           <button
             type='submit'
-            className='focus:ring-primary-300 dark:focus:ring-primary-800 w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 dark:bg-blue-600 dark:hover:bg-blue-700'
+            className='w-full rounded-lg bg-color-primary px-5 py-2.5 text-center text-sm text-color-text-light transition-all hover:bg-color-primary-active focus:bg-color-primary-active'
           >
             Sign in
           </button>

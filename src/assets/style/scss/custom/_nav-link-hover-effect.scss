@@ -1,14 +1,7 @@
 .nav-link-hover-effect {
-  background-image: linear-gradient(to right, $color-primary, $color-primary 50%, $color-text-light 50%);
-  background-size: 200% 100%;
-  background-position: -100%;
   position: relative;
   padding: 4px 0;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   transition: all 0.3s ease-in-out;
-  font-weight: 500;
 }
 
 .nav-link-hover-effect:before {
@@ -23,9 +16,8 @@
   transition: all 0.3s ease-in-out;
 }
 
-.nav-link-hover-effect:hover,
 .nav-link-hover-effect--active {
-  background-position: 0;
+  color: $color-primary !important;
 }
 
 .nav-link-hover-effect:hover::before {
