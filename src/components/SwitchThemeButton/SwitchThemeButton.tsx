@@ -4,7 +4,7 @@ import useDarkMode from 'src/hooks/useTheme'
 
 export default function SwitchThemeButton() {
   const [colorTheme, setTheme] = useDarkMode()
-  const [darkMode, setDarkMode] = useState(colorTheme === 'light' ? true : false)
+  const [darkMode, setDarkMode] = useState(colorTheme === 'dark' ? true : false)
   const toggleDarkMode = (checked: boolean) => {
     setTheme(colorTheme)
     setDarkMode(checked)

@@ -16,7 +16,7 @@ export default function MainHeader() {
     window.scrollY > HEADER_HEIGHT ? setIsFixedHeader(true) : setIsFixedHeader(false)
   }
   return (
-    <header className='bg-color-bg-dark-primary'>
+    <header className='hidden bg-color-bg-dark-primary sm:block'>
       <div className='container mx-auto flex h-32 items-center justify-between'>
         <div>
           <Link to={'/'}>
