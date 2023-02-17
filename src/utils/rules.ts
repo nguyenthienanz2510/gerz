@@ -70,7 +70,7 @@ export const schema = yup.object({
     .required('Confirm password is require')
     .min(6, 'Length from 6-160 characters')
     .max(160, 'Length from 6-160 characters')
-    .oneOf([yup.ref('password')], 'Confirm Password is not same with Password')
+    .oneOf([yup.ref('password')], 'Confirm password is not same with Password')
 })
 
 export type Schema = yup.InferType<typeof schema>
