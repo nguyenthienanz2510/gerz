@@ -13,7 +13,7 @@ export default function RegisterLayout({ children }: RegisterLayoutProps) {
     <div className='flex min-h-screen flex-col bg-white dark:bg-color-bg-dark-secondary'>
       <HeaderRegister />
       <main className='container mx-auto flex flex-1 items-center py-20'>
-        <div className='mx-auto grid max-w-4xl grid-cols-1 gap-10 sm:grid-cols-2'>
+        <div className='mx-auto grid w-full max-w-4xl grid-cols-1 gap-10 sm:grid-cols-2'>
           <div className='hidden sm:col-span-1 sm:block'>
             <Lottie
               options={{
