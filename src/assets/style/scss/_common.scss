@@ -35,9 +35,18 @@
   -webkit-box-orient: vertical;
 }
 
-.button__hover--primary svg {
+.button__hover--primary {
   transition: all 0.3s;
+  svg,
+  span {
+    transition: all 0.3s;
+  }
   &:hover {
+    cursor: pointer;
     color: $color-primary;
+    svg,
+    span {
+      color: $color-primary;
+    }
   }
 }
