@@ -6,7 +6,7 @@ interface SwitchThemeButtonProps {
   size?: number
 }
 
-export default function SwitchThemeButton({ size = 24 }: SwitchThemeButtonProps) {
+export default function SwitchThemeButton({ size = 20 }: SwitchThemeButtonProps) {
   const [colorTheme, setTheme] = useDarkMode()
   const [darkMode, setDarkMode] = useState(colorTheme === 'dark' ? true : false)
   const toggleDarkMode = (checked: boolean) => {

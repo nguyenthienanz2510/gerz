@@ -43,7 +43,7 @@ export default function MainHeaderMobile() {
                 Register
               </Link>
             </div>
-            <SwitchThemeButton />
+            <SwitchThemeButton size={24} />
           </div>
         </div>
         <NavbarMobile />

@@ -2,15 +2,37 @@ import { Link } from 'react-router-dom'
 import SwitchThemeButton from 'src/components/SwitchThemeButton'
 import Navbar from './Navbar'
 import logo_main from 'src/assets/images/logos/logo-main.svg'
-import { useEffect, useState } from 'react'
-import { faUser, faCartShopping, faPhone, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { useContext, useEffect, useState } from 'react'
+import {
+  faUser,
+  faCartShopping,
+  faPhone,
+  faRightFromBracket,
+  faUserAlt,
+  faRightToBracket
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Popover from 'src/components/Popover'
+import { AppContext } from 'src/context/app.context'
+import { useMutation } from '@tanstack/react-query'
+import { logoutAccount } from 'src/apis/auth.api'
+import { faEarthAsia, faGlobe, faSortDown } from '@fortawesome/free-solid-svg-icons'
 
 export default function MainHeader() {
   const [isFixedHeader, setIsFixedHeader] = useState(false)
-  const [isLogin] = useState(true)
+  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
   const HEADER_HEIGHT = 180
+
+  const logoutMutation = useMutation({
+    mutationFn: () => logoutAccount(),
+    onSuccess: () => {
+      setIsAuthenticated(false)
+    }
+  })
+
+  const handleLogoutAccount = () => {
+    logoutMutation.mutate()
+  }
 
   useEffect(() => {
     window.scrollY > HEADER_HEIGHT ? setIsFixedHeader(true) : setIsFixedHeader(false)
@@ -27,7 +49,7 @@ export default function MainHeader() {
           </Link>
         </div>
 
-        {isLogin ? (
+        {isAuthenticated ? (
           <div className='flex items-center gap-10 text-12 text-color-text-light'>
             <div className='flex flex-col items-center'>
               <a href='tel:0363016630'>
@@ -176,12 +198,15 @@ export default function MainHeader() {
                     <span className='flex justify-between border-b border-color-black py-2 px-5'>
                       <span className='cursor-default'>Change theme</span>
                       <span className='button__hover--primary cursor-pointer'>
-                        <SwitchThemeButton size={20} />
+                        <SwitchThemeButton />
                       </span>
                     </span>
-                    <span className='button__hover--primary flex cursor-pointer justify-between py-2 px-5'>
+                    <button
+                      onClick={handleLogoutAccount}
+                      className='button__hover--primary flex cursor-pointer justify-between py-2 px-5'
+                    >
                       Logout <FontAwesomeIcon icon={faRightFromBracket} size={'lg'} color={'#feffff'} />
-                    </span>
+                    </button>
                   </div>
                 </div>
               }
@@ -199,11 +224,34 @@ export default function MainHeader() {
           <div className='flex items-center text-color-text-light'>
             <div className='ml-5 flex'>
               <SwitchThemeButton />
-              <div className='ml-3 flex items-center'>
-                <Link to={'/login'}>Login/</Link>
-                <Link to={'/register'} className='ml-1'>
-                  Register
+              <div className='mx-6 flex items-center text-color-text-dark'>
+                <Popover
+                  className='button__hover--primary text-color-text-light'
+                  popover={
+                    <div className='flex flex-col border border-color-border-primary bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary'>
+                      <span className='button__hover--primary cursor-pointer border-b border-color-black py-2 px-5'>
+                        <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} className='mr-2' />
+                        English
+                      </span>
+                      <span className='button__hover--primary cursor-pointer py-2 px-5'>
+                        <FontAwesomeIcon icon={faEarthAsia} size={'lg'} color={'#feffff'} className='mr-2' />
+                        Vietnamese
+                      </span>
+                    </div>
+                  }
+                >
+                  <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} />
+                  <span className='mx-2'>English</span>
+                  <FontAwesomeIcon icon={faSortDown} size={'lg'} color={'#feffff'} className='-translate-y-1' />
+                </Popover>
+              </div>
+              <div className='flex items-center gap-2'>
+                <Link to={'/login'} className='button__hover--primary'>
+                  <FontAwesomeIcon icon={faRightToBracket} size={'lg'} color={'#feffff'} />
+                  <span className='ml-2'>Login</span>
                 </Link>
+                <span className='h-4 border-r border-color-border-secondary'></span>
+                <Link to={'/register'}>Register</Link>
               </div>
             </div>
           </div>
