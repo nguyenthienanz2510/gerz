@@ -167,12 +167,17 @@ export default function MainHeader() {
                     </span>
                   </div>
                   <div className='flex flex-col'>
-                    <span className='button__hover--primary cursor-pointer border-b border-color-black py-2 px-5'>
+                    <Link
+                      to={'/profile'}
+                      className='button__hover--primary cursor-pointer border-b border-color-black py-2 px-5'
+                    >
                       Profile
-                    </span>
-                    <span className='button__hover--primary flex cursor-pointer justify-between border-b border-color-black py-2 px-5'>
-                      <span>Change theme</span>
-                      <SwitchThemeButton size={20} />
+                    </Link>
+                    <span className='flex justify-between border-b border-color-black py-2 px-5'>
+                      <span className='cursor-default'>Change theme</span>
+                      <span className='button__hover--primary cursor-pointer'>
+                        <SwitchThemeButton size={20} />
+                      </span>
                     </span>
                     <span className='button__hover--primary flex cursor-pointer justify-between py-2 px-5'>
                       Logout <FontAwesomeIcon icon={faRightFromBracket} size={'lg'} color={'#feffff'} />
