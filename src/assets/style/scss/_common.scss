@@ -50,3 +50,14 @@
     }
   }
 }
+
+.product__cart {
+  img {
+    transition: all linear 0.3s;
+  }
+  &:hover {
+    img {
+      scale: 1.1;
+    }
+  }
+}

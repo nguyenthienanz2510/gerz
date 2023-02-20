@@ -55,7 +55,7 @@ export default function Popover({
             >
               <span
                 ref={arrowRef}
-                className='absolute translate-y-[-19px] border-[10px] border-x-transparent border-t-transparent border-b-color-border-primary'
+                className='absolute translate-y-[-19px] border-[10px] border-x-transparent border-t-transparent border-b-color-border-primary-light'
                 style={{
                   left: middlewareData.arrow?.x,
                   top: -1
