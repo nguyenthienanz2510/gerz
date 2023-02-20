@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faUser } from '@fortawesome/free-solid-svg-icons'
 import NavbarMobile from './NavbarMobile'
 import { useState } from 'react'
+import path from 'src/constant/path'
 
 export default function MainHeaderMobile() {
   const [isOpenNavBar, setIsOpenNavBar] = useState(false)
@@ -22,11 +23,11 @@ export default function MainHeaderMobile() {
           <FontAwesomeIcon icon={faBars} size={'xl'} color={'#feffff'} />
         </button>
         <div>
-          <Link to={'/'}>
+          <Link to={path.home}>
             <img src={logo_main} className='h-16' alt='logo' />
           </Link>
         </div>
-        <Link to={'/login'} className='button__hover--primary flex h-10 w-10 items-center justify-center'>
+        <Link to={path.login} className='button__hover--primary flex h-10 w-10 items-center justify-center'>
           <FontAwesomeIcon icon={faUser} size={'xl'} color={'#feffff'} />
         </Link>
       </div>
@@ -38,8 +39,8 @@ export default function MainHeaderMobile() {
         <div className='flex items-center border-b-2 border-color-black py-4 text-color-text-light'>
           <div className='container mx-auto flex justify-between'>
             <div className='flex items-center'>
-              <Link to={'/login'}>Login/</Link>
-              <Link to={'/register'} className='ml-1'>
+              <Link to={path.login}>Login/</Link>
+              <Link to={path.register} className='ml-1'>
                 Register
               </Link>
             </div>

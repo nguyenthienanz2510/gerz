@@ -8,7 +8,6 @@ import {
   faCartShopping,
   faPhone,
   faRightFromBracket,
-  faUserAlt,
   faRightToBracket
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -17,16 +16,18 @@ import { AppContext } from 'src/context/app.context'
 import { useMutation } from '@tanstack/react-query'
 import { logoutAccount } from 'src/apis/auth.api'
 import { faEarthAsia, faGlobe, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import path from 'src/constant/path'
 
 export default function MainHeader() {
   const [isFixedHeader, setIsFixedHeader] = useState(false)
-  const { isAuthenticated, setIsAuthenticated } = useContext(AppContext)
+  const { isAuthenticated, setIsAuthenticated, userProfile, setUserProfile } = useContext(AppContext)
   const HEADER_HEIGHT = 180
 
   const logoutMutation = useMutation({
     mutationFn: () => logoutAccount(),
     onSuccess: () => {
       setIsAuthenticated(false)
+      setUserProfile(null)
     }
   })
 
@@ -89,7 +90,7 @@ export default function MainHeader() {
                           DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
                         </span>
                       </div>
-                      <div className='flex-shrink-0'>
+                      <div className='flex-shrink-0 pt-[1px]'>
                         <span className='text-color-secondary'>
                           <strong>125$</strong>
                         </span>
@@ -107,7 +108,7 @@ export default function MainHeader() {
                           DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
                         </span>
                       </div>
-                      <div className='flex-shrink-0'>
+                      <div className='flex-shrink-0 pt-[1px]'>
                         <span className='text-color-secondary'>
                           <strong>125$</strong>
                         </span>
@@ -125,7 +126,7 @@ export default function MainHeader() {
                           DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
                         </span>
                       </div>
-                      <div className='flex-shrink-0'>
+                      <div className='flex-shrink-0 pt-[1px]'>
                         <span className='text-color-secondary'>
                           <strong>125$</strong>
                         </span>
@@ -143,7 +144,7 @@ export default function MainHeader() {
                           DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
                         </span>
                       </div>
-                      <div className='flex-shrink-0'>
+                      <div className='flex-shrink-0 pt-[1px]'>
                         <span className='text-color-secondary'>
                           <strong>125$</strong>
                         </span>
@@ -161,7 +162,7 @@ export default function MainHeader() {
                           DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
                         </span>
                       </div>
-                      <div className='flex-shrink-0'>
+                      <div className='flex-shrink-0 pt-[1px]'>
                         <span className='text-color-secondary'>
                           <strong>125$</strong>
                         </span>
@@ -185,19 +186,19 @@ export default function MainHeader() {
                 <div className='flex flex-col border border-color-border-primary bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary'>
                   <div className='flex flex-col'>
                     <span className='border-b border-color-black py-4 px-5'>
-                      Hello! <span className='text-color-primary'>Joshua Kimmich</span>
+                      Hello! <span className='text-color-primary'>{userProfile?.email || 'Username'}</span>
                     </span>
                   </div>
                   <div className='flex flex-col'>
                     <Link
-                      to={'/profile'}
+                      to={path.profile}
                       className='button__hover--primary cursor-pointer border-b border-color-black py-2 px-5'
                     >
                       Profile
                     </Link>
                     <span className='flex justify-between border-b border-color-black py-2 px-5'>
                       <span className='cursor-default'>Change theme</span>
-                      <span className='button__hover--primary cursor-pointer'>
+                      <span className='button__hover--primary ml-5 cursor-pointer'>
                         <SwitchThemeButton />
                       </span>
                     </span>
@@ -205,7 +206,8 @@ export default function MainHeader() {
                       onClick={handleLogoutAccount}
                       className='button__hover--primary flex cursor-pointer justify-between py-2 px-5'
                     >
-                      Logout <FontAwesomeIcon icon={faRightFromBracket} size={'lg'} color={'#feffff'} />
+                      Logout{' '}
+                      <FontAwesomeIcon icon={faRightFromBracket} size={'lg'} color={'#feffff'} className='ml-5' />
                     </button>
                   </div>
                 </div>
@@ -216,7 +218,7 @@ export default function MainHeader() {
               </button>
               <div className='flex flex-col items-center'>
                 <span>Profile</span>
-                <span className='text-color-text-gray-light'>Joshua Kimmich</span>
+                <span className='text-color-text-gray-light'>{userProfile?.email || 'Username'}</span>
               </div>
             </Popover>
           </div>
@@ -246,12 +248,12 @@ export default function MainHeader() {
                 </Popover>
               </div>
               <div className='flex items-center gap-2'>
-                <Link to={'/login'} className='button__hover--primary'>
+                <Link to={path.login} className='button__hover--primary'>
                   <FontAwesomeIcon icon={faRightToBracket} size={'lg'} color={'#feffff'} />
                   <span className='ml-2'>Login</span>
                 </Link>
                 <span className='h-4 border-r border-color-border-secondary'></span>
-                <Link to={'/register'}>Register</Link>
+                <Link to={path.register}>Register</Link>
               </div>
             </div>
           </div>

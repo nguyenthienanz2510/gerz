@@ -9,13 +9,15 @@ import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
 import { useContext } from 'react'
 import { AppContext } from 'src/context/app.context'
+import Button from 'src/components/Button'
+import path from 'src/constant/path'
 
 type FormData = Omit<Schema, 'confirm_password'>
 
 const loginSchema = schema.omit(['confirm_password'])
 
 export default function Register() {
-  const { setIsAuthenticated } = useContext(AppContext)
+  const { setIsAuthenticated, setUserProfile } = useContext(AppContext)
 
   const {
     register,
@@ -35,8 +37,8 @@ export default function Register() {
     console.log(body)
     loginAccountMutation.mutate(body, {
       onSuccess: (data) => {
-        console.log(data)
         setIsAuthenticated(true)
+        setUserProfile(data.data.data.user)
       },
       onError: (error) => {
         if (isAxiosUnprocessableEntityError<ErrorResponse<Omit<FormData, 'confirm_password'>>>(error)) {
@@ -89,15 +91,17 @@ export default function Register() {
             register={register}
             errorMessage={errors.password?.message}
           />
-          <button
+          <Button
+            isLoading={loginAccountMutation.isLoading}
+            disabled={loginAccountMutation.isLoading}
             type='submit'
             className='w-full rounded-lg bg-color-primary px-5 py-2.5 text-center text-sm text-color-text-light transition-all hover:bg-color-primary-active focus:bg-color-primary-active'
           >
             Login
-          </button>
+          </Button>
           <p className='text-sm font-light text-gray-500 dark:text-gray-400'>
             Don’t have an account yet?{' '}
-            <Link to={'/register'}>
+            <Link to={path.register}>
               <span className='text-color-primary transition-all hover:underline'>Register</span>
             </Link>
           </p>
