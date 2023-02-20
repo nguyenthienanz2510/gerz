@@ -20,7 +20,7 @@ export default function HeaderRegister() {
             <Popover
               className='button__hover--primary text-color-text-light'
               popover={
-                <div className='flex flex-col border border-color-border-primary bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary'>
+                <div className='flex flex-col border border-color-border-primary-light bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary-light'>
                   <span className='button__hover--primary cursor-pointer border-b border-color-black py-2 px-5'>
                     <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} className='mr-2' />
                     English

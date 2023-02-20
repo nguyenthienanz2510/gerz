@@ -37,8 +37,8 @@ module.exports = {
         'color-danger': '#cf304a',
         'color-bg-dark-primary': '#1d1e23',
         'color-bg-dark-secondary': '#121215',
-        'color-border-primary': '#374151',
-        'color-border-secondary': '#eaeaea'
+        'color-border-primary-light': '#374151',
+        'color-border-primary-dark': '#3435391a'
       },
       fontSize: {
         10: '10px',

@@ -67,8 +67,8 @@ export default function MainHeader() {
             <Popover
               className='button__hover--primary flex flex-col items-center'
               popover={
-                <div className='flex w-[420px] flex-col rounded border border-color-border-primary bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary'>
-                  <div className='flex justify-between border-b border-color-border-primary px-3 py-3'>
+                <div className='flex w-[420px] flex-col rounded border border-color-border-primary-light bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary-light'>
+                  <div className='flex justify-between border-b border-color-border-primary-light px-3 py-3'>
                     <span>
                       <strong>New Products Added</strong>
                     </span>
@@ -182,7 +182,7 @@ export default function MainHeader() {
             <Popover
               className='button__hover--primary flex flex-col items-center'
               popover={
-                <div className='flex flex-col border border-color-border-primary bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary'>
+                <div className='flex flex-col border border-color-border-primary-light bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary-light'>
                   <div className='flex flex-col'>
                     <span className='border-b border-color-black py-4 px-5'>
                       Hello! <span className='text-color-primary'>Joshua Kimmich</span>
@@ -228,7 +228,7 @@ export default function MainHeader() {
                 <Popover
                   className='button__hover--primary text-color-text-light'
                   popover={
-                    <div className='flex flex-col border border-color-border-primary bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary'>
+                    <div className='flex flex-col border border-color-border-primary-light bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary-light'>
                       <span className='button__hover--primary cursor-pointer border-b border-color-black py-2 px-5'>
                         <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} className='mr-2' />
                         English
@@ -250,7 +250,7 @@ export default function MainHeader() {
                   <FontAwesomeIcon icon={faRightToBracket} size={'lg'} color={'#feffff'} />
                   <span className='ml-2'>Login</span>
                 </Link>
-                <span className='h-4 border-r border-color-border-secondary'></span>
+                <span className='h-4 border-r border-gray-400'></span>
                 <Link to={'/register'}>Register</Link>
               </div>
             </div>
