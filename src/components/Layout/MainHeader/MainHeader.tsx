@@ -78,96 +78,28 @@ export default function MainHeader() {
                     </Link>
                   </div>
                   <div className='py-2'>
-                    <Link to={'/'} className='flex gap-3 px-3 py-2'>
-                      <div className='h-10 w-10 flex-shrink-0'>
-                        <img
-                          src='https://api-ecom.duthanhduoc.com/images/1c323bdd-c0ef-4538-b09d-34c1a4478baa.jpg'
-                          alt='productImage'
-                        />
-                      </div>
-                      <div className='flex flex-grow items-center'>
-                        <span className='text-truncate-2 text-12'>
-                          DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
-                        </span>
-                      </div>
-                      <div className='flex-shrink-0 pt-[1px]'>
-                        <span className='text-color-secondary'>
-                          <strong>125$</strong>
-                        </span>
-                      </div>
-                    </Link>
-                    <Link to={'/'} className='flex gap-3 px-3 py-2'>
-                      <div className='h-10 w-10 flex-shrink-0'>
-                        <img
-                          src='https://api-ecom.duthanhduoc.com/images/1c323bdd-c0ef-4538-b09d-34c1a4478baa.jpg'
-                          alt='productImage'
-                        />
-                      </div>
-                      <div className='flex flex-grow items-center'>
-                        <span className='text-truncate-2 text-12'>
-                          DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
-                        </span>
-                      </div>
-                      <div className='flex-shrink-0 pt-[1px]'>
-                        <span className='text-color-secondary'>
-                          <strong>125$</strong>
-                        </span>
-                      </div>
-                    </Link>
-                    <Link to={'/'} className='flex gap-3 px-3 py-2'>
-                      <div className='h-10 w-10 flex-shrink-0'>
-                        <img
-                          src='https://api-ecom.duthanhduoc.com/images/1c323bdd-c0ef-4538-b09d-34c1a4478baa.jpg'
-                          alt='productImage'
-                        />
-                      </div>
-                      <div className='flex flex-grow items-center'>
-                        <span className='text-truncate-2 text-12'>
-                          DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
-                        </span>
-                      </div>
-                      <div className='flex-shrink-0 pt-[1px]'>
-                        <span className='text-color-secondary'>
-                          <strong>125$</strong>
-                        </span>
-                      </div>
-                    </Link>
-                    <Link to={'/'} className='flex gap-3 px-3 py-2'>
-                      <div className='h-10 w-10 flex-shrink-0'>
-                        <img
-                          src='https://api-ecom.duthanhduoc.com/images/1c323bdd-c0ef-4538-b09d-34c1a4478baa.jpg'
-                          alt='productImage'
-                        />
-                      </div>
-                      <div className='flex flex-grow items-center'>
-                        <span className='text-truncate-2 text-12'>
-                          DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
-                        </span>
-                      </div>
-                      <div className='flex-shrink-0 pt-[1px]'>
-                        <span className='text-color-secondary'>
-                          <strong>125$</strong>
-                        </span>
-                      </div>
-                    </Link>
-                    <Link to={'/'} className='flex gap-3 px-3 py-2'>
-                      <div className='h-10 w-10 flex-shrink-0'>
-                        <img
-                          src='https://api-ecom.duthanhduoc.com/images/1c323bdd-c0ef-4538-b09d-34c1a4478baa.jpg'
-                          alt='productImage'
-                        />
-                      </div>
-                      <div className='flex flex-grow items-center'>
-                        <span className='text-truncate-2 text-12'>
-                          DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
-                        </span>
-                      </div>
-                      <div className='flex-shrink-0 pt-[1px]'>
-                        <span className='text-color-secondary'>
-                          <strong>125$</strong>
-                        </span>
-                      </div>
-                    </Link>
+                    {Array(5)
+                      .fill(0)
+                      .map((_, index) => (
+                        <Link to={'/'} key={index} className='flex gap-3 px-3 py-2'>
+                          <div className='h-10 w-10 flex-shrink-0'>
+                            <img
+                              src='https://api-ecom.duthanhduoc.com/images/1c323bdd-c0ef-4538-b09d-34c1a4478baa.jpg'
+                              alt='productImage'
+                            />
+                          </div>
+                          <div className='flex flex-grow items-center'>
+                            <span className='text-truncate-2 text-12'>
+                              DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
+                            </span>
+                          </div>
+                          <div className='flex-shrink-0 pt-[1px]'>
+                            <span className='text-color-secondary'>
+                              <strong>125$</strong>
+                            </span>
+                          </div>
+                        </Link>
+                      ))}
                   </div>
                 </div>
               }
@@ -196,6 +128,28 @@ export default function MainHeader() {
                     >
                       Profile
                     </Link>
+                    <span className='flex justify-between border-b border-color-black py-2 px-5'>
+                      <span>Language</span>
+                      <Popover
+                        className='button__hover--primary text-color-text-light'
+                        popover={
+                          <div className='flex flex-col border border-color-border-primary-light bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary-light'>
+                            <span className='button__hover--primary cursor-pointer border-b border-color-black py-2 px-5'>
+                              <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} className='mr-2' />
+                              English
+                            </span>
+                            <span className='button__hover--primary cursor-pointer py-2 px-5'>
+                              <FontAwesomeIcon icon={faEarthAsia} size={'lg'} color={'#feffff'} className='mr-2' />
+                              Vietnamese
+                            </span>
+                          </div>
+                        }
+                      >
+                        <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} />
+                        <span className='mx-2'>English</span>
+                        <FontAwesomeIcon icon={faSortDown} size={'lg'} color={'#feffff'} className='-translate-y-1' />
+                      </Popover>
+                    </span>
                     <span className='flex justify-between border-b border-color-black py-2 px-5'>
                       <span className='cursor-default'>Change theme</span>
                       <span className='button__hover--primary ml-5 cursor-pointer'>
