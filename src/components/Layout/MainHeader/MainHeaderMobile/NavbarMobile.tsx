@@ -28,7 +28,7 @@ export default function NavbarMobile() {
             <NavLink
               className={({ isActive }) =>
                 (isActive ? 'text-color-primary' : undefined) +
-                ' container mx-auto mr-12 block border-b-2 border-b-color-black py-4 text-12 uppercase'
+                ' container mx-auto mr-12 block border-b-2 border-b-color-black py-4 uppercase'
               }
               to={item.slug}
             >
