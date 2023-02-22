@@ -61,7 +61,7 @@ export default function MainHeader() {
               <div className='flex flex-col items-center'>
                 <a href='tel:0363016630'>0363-016-630</a>
                 <a href='mailto:support@gerz.com' className='text-color-text-gray-light'>
-                  <span>support@gerz.com</span>
+                  <span>anzgermany@gmail.com</span>
                 </a>
               </div>
             </div>
@@ -267,7 +267,7 @@ export default function MainHeader() {
       <div
         className={`fixed ${
           isFixedHeader ? 'top-0' : 'top-[-64px]'
-        } left-0 right-0 border-t-2 border-t-color-bg-dark-secondary bg-[rgba(29,30,35,0.92)] backdrop-blur-md duration-500`}
+        } left-0 right-0 z-50 border-t-2 border-t-color-bg-dark-secondary bg-[rgba(29,30,35,0.92)] backdrop-blur-md duration-500`}
       >
         <div className='container mx-auto flex h-16 items-center'>
           <Navbar />
