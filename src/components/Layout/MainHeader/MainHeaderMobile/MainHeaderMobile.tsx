@@ -34,7 +34,7 @@ export default function MainHeaderMobile() {
 
   return (
     <header
-      className={`top-0 left-0 right-0 bg-color-bg-dark-primary sm:hidden ${isOpenNavBar ? 'fixed' : 'relative'}`}
+      className={`top-0 left-0 right-0 z-50 bg-color-bg-dark-primary sm:hidden ${isOpenNavBar ? 'fixed' : 'relative'}`}
     >
       <div className='container mx-auto flex h-20 items-center justify-between'>
         <button className='button__hover--primary h-10 w-10' onClick={handleOpenNavBar}>
@@ -86,7 +86,7 @@ export default function MainHeaderMobile() {
                     className='button__hover--primary text-color-text-light'
                     popover={
                       <div className='flex flex-col border border-color-border-primary-light bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary-light'>
-                        <span className='button__hover--primary cursor-pointer border-b border-color-black py-2'>
+                        <span className='button__hover--primary cursor-pointer border-b border-color-black py-2 px-5'>
                           <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} className='mr-2' />
                           English
                         </span>
