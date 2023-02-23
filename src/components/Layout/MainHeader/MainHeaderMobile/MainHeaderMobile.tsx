@@ -10,14 +10,14 @@ import { AppContext } from 'src/context/app.context'
 import Popover from 'src/components/Popover'
 import { faEarthAsia, faGlobe, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { useMutation } from '@tanstack/react-query'
-import { logoutAccount } from 'src/apis/auth.api'
+import authApi from 'src/apis/auth.api'
 
 export default function MainHeaderMobile() {
   const [isOpenNavBar, setIsOpenNavBar] = useState(false)
   const { isAuthenticated, setIsAuthenticated, userProfile, setUserProfile } = useContext(AppContext)
 
   const logoutMutation = useMutation({
-    mutationFn: () => logoutAccount(),
+    mutationFn: () => authApi.logoutAccount(),
     onSuccess: () => {
       setIsAuthenticated(false)
       setUserProfile(null)

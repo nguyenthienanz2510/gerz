@@ -14,9 +14,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Popover from 'src/components/Popover'
 import { AppContext } from 'src/context/app.context'
 import { useMutation } from '@tanstack/react-query'
-import { logoutAccount } from 'src/apis/auth.api'
 import { faEarthAsia, faGlobe, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import path from 'src/constant/path'
+import authApi from 'src/apis/auth.api'
 
 export default function MainHeader() {
   const [isFixedHeader, setIsFixedHeader] = useState(false)
@@ -24,7 +24,7 @@ export default function MainHeader() {
   const HEADER_HEIGHT = 180
 
   const logoutMutation = useMutation({
-    mutationFn: () => logoutAccount(),
+    mutationFn: () => authApi.logoutAccount(),
     onSuccess: () => {
       setIsAuthenticated(false)
       setUserProfile(null)
