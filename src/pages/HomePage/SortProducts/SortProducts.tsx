@@ -16,7 +16,7 @@ export default function SortProducts() {
           Top sales
         </button>
         <select
-          value=''
+          defaultValue=''
           className='h-9 rounded bg-color-third px-3 hover:bg-color-primary-active dark:bg-color-bg-dark-secondary dark:hover:bg-color-primary-active'
         >
           <option value='' disabled>

@@ -89,7 +89,7 @@ export default function MainHeader() {
                             />
                           </div>
                           <div className='flex flex-grow items-center'>
-                            <span className='text-truncate-2 text-12'>
+                            <span className='line-clamp-2 text-12'>
                               DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
                             </span>
                           </div>
