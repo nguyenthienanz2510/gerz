@@ -4,9 +4,4 @@
 
 @import './scss/custom/react-toggle-dark-mode';
 @import './scss/custom/nav-link-hover-effect';
-
-div[data-floating-ui-portal] {
-  & > div {
-    z-index: 1000;
-  }
-}
+@import './scss/custom/floating-ui'
