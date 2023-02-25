@@ -1,22 +1,21 @@
-import { Link } from 'react-router-dom'
-import SwitchThemeButton from 'src/components/SwitchThemeButton'
-import Navbar from './Navbar'
-import logo_main from 'src/assets/images/logos/logo-main.svg'
-import { useContext, useEffect, useState } from 'react'
 import {
-  faUser,
   faCartShopping,
   faPhone,
   faRightFromBracket,
-  faRightToBracket
+  faRightToBracket, faUser
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Popover from 'src/components/Popover'
-import { AppContext } from 'src/context/app.context'
 import { useMutation } from '@tanstack/react-query'
-import { faEarthAsia, faGlobe, faSortDown } from '@fortawesome/free-solid-svg-icons'
-import path from 'src/constant/path'
+import { useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import authApi from 'src/apis/auth.api'
+import logo_main from 'src/assets/images/logos/logo-main.svg'
+import Popover from 'src/components/Popover'
+import SelectLanguage from 'src/components/SelectLanguage'
+import SwitchThemeButton from 'src/components/SwitchThemeButton'
+import path from 'src/constant/path'
+import { AppContext } from 'src/context/app.context'
+import Navbar from './Navbar'
 
 export default function MainHeader() {
   const [isFixedHeader, setIsFixedHeader] = useState(false)
@@ -89,7 +88,7 @@ export default function MainHeader() {
                             />
                           </div>
                           <div className='flex flex-grow items-center'>
-                            <span className='line-clamp-2 text-12'>
+                            <span className='text-12 line-clamp-2'>
                               DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
                             </span>
                           </div>
@@ -130,25 +129,7 @@ export default function MainHeader() {
                     </Link>
                     <span className='flex justify-between border-b border-color-black py-2 px-5'>
                       <span>Language</span>
-                      <Popover
-                        className='button__hover--primary text-color-text-light'
-                        popover={
-                          <div className='flex flex-col border border-color-border-primary-light bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary-light'>
-                            <span className='button__hover--primary cursor-pointer border-b border-color-black py-2 px-5'>
-                              <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} className='mr-2' />
-                              English
-                            </span>
-                            <span className='button__hover--primary cursor-pointer py-2 px-5'>
-                              <FontAwesomeIcon icon={faEarthAsia} size={'lg'} color={'#feffff'} className='mr-2' />
-                              Vietnamese
-                            </span>
-                          </div>
-                        }
-                      >
-                        <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} />
-                        <span className='mx-2'>English</span>
-                        <FontAwesomeIcon icon={faSortDown} size={'lg'} color={'#feffff'} className='-translate-y-1' />
-                      </Popover>
+                      <SelectLanguage />
                     </span>
                     <span className='flex justify-between border-b border-color-black py-2 px-5'>
                       <span className='cursor-default'>Change theme</span>
@@ -181,25 +162,7 @@ export default function MainHeader() {
             <div className='ml-5 flex'>
               <SwitchThemeButton />
               <div className='mx-6 flex items-center text-color-text-dark'>
-                <Popover
-                  className='button__hover--primary text-color-text-light'
-                  popover={
-                    <div className='flex flex-col border border-color-border-primary-light bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary-light'>
-                      <span className='button__hover--primary cursor-pointer border-b border-color-black py-2 px-5'>
-                        <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} className='mr-2' />
-                        English
-                      </span>
-                      <span className='button__hover--primary cursor-pointer py-2 px-5'>
-                        <FontAwesomeIcon icon={faEarthAsia} size={'lg'} color={'#feffff'} className='mr-2' />
-                        Vietnamese
-                      </span>
-                    </div>
-                  }
-                >
-                  <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} />
-                  <span className='mx-2'>English</span>
-                  <FontAwesomeIcon icon={faSortDown} size={'lg'} color={'#feffff'} className='-translate-y-1' />
-                </Popover>
+                <SelectLanguage />
               </div>
               <div className='flex items-center gap-2'>
                 <Link to={path.login} className='button__hover--primary'>
