@@ -1,39 +1,54 @@
-import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { faCaretRight, faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { createSearchParams, Link } from 'react-router-dom'
 import Button from 'src/components/Button'
 import Input from 'src/components/Form/Input'
 import path from 'src/constant/path'
+import { Category } from 'src/types/category.type'
+import { QueryConfig } from '../HomePage'
 
-export default function AsideFilter() {
+interface AsideFilterProps {
+  queryConfig: QueryConfig
+  categories: Category[]
+}
+
+export default function AsideFilter({ categories, queryConfig }: AsideFilterProps) {
+  const { category } = queryConfig
   return (
     <div className='space-y-5 rounded border border-color-border-primary-dark p-5 dark:border-none dark:bg-color-bg-dark-primary'>
       <div>
         <h4 className='mb-3 border-b border-color-border-primary-dark pb-3 font-semibold dark:border-color-border-primary-light'>
           ALL CATEGORIES
         </h4>
-        <ul className='list-disc space-y-1 pl-5'>
-          <li>
-            <Link to={path.home} className='inline-block py-1'>
-              T-Shirt
-            </Link>
-          </li>
-          <li>
-            <Link to={path.home} className='inline-block py-1'>
-              T-Shirt
-            </Link>
-          </li>
-          <li>
-            <Link to={path.home} className='inline-block py-1'>
-              T-Shirt
-            </Link>
-          </li>
-          <li>
-            <Link to={path.home} className='inline-block py-1'>
-              T-Shirt
-            </Link>
-          </li>
+        <ul className='space-y-1 pl-5'>
+          {categories.map((categoryItem) => {
+            const isActive = category === categoryItem._id
+            return (
+              <li key={categoryItem._id} className='relative'>
+                {(isActive || !category) && (
+                  <div className='absolute -left-4 flex h-7 items-center'>
+                    <FontAwesomeIcon icon={faCaretRight} size={'1x'} color={'#FFCC00'} />
+                  </div>
+                )}
+                <Link
+                  to={{
+                    pathname: path.home,
+                    search: createSearchParams({
+                      ...queryConfig,
+                      category: categoryItem._id
+                    }).toString()
+                  }}
+                  className={classNames('inline-block py-1', {
+                    'text-color-primary': isActive || !category
+                  })}
+                >
+                  {categoryItem.name}
+                </Link>
+              </li>
+            )
+          })}
         </ul>
       </div>
       <div>
