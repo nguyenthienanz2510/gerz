@@ -1,12 +1,15 @@
-import { faCaretRight, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faCaretRight, faLeaf, faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { yupResolver } from '@hookform/resolvers/yup'
 import classNames from 'classnames'
-import React from 'react'
-import { createSearchParams, Link } from 'react-router-dom'
+import { Controller, useForm } from 'react-hook-form'
+import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import Button from 'src/components/Button'
-import Input from 'src/components/Form/Input'
+import InputNumber from 'src/components/Form/InputNumber'
 import path from 'src/constant/path'
 import { Category } from 'src/types/category.type'
+import { NoUndefinedField } from 'src/types/utils.type'
+import { Schema, schema } from 'src/utils/rules'
 import { QueryConfig } from '../HomePage'
 
 interface AsideFilterProps {
@@ -14,8 +17,40 @@ interface AsideFilterProps {
   categories: Category[]
 }
 
+type formData = NoUndefinedField<Pick<Schema, 'price_min' | 'price_max'>>
+
+const priceSchema = schema.pick(['price_min', 'price_max'])
+
 export default function AsideFilter({ categories, queryConfig }: AsideFilterProps) {
   const { category } = queryConfig
+  const navigate = useNavigate()
+  const {
+    control,
+    handleSubmit,
+    watch,
+    trigger,
+    formState: { errors }
+  } = useForm<formData>({
+    defaultValues: {
+      price_min: '',
+      price_max: ''
+    },
+    resolver: yupResolver(priceSchema),
+    shouldFocusError: false
+  })
+  console.log(errors)
+
+  const onSubmit = handleSubmit((data) => {
+    navigate({
+      pathname: path.home,
+      search: createSearchParams({
+        ...queryConfig,
+        price_min: data.price_min,
+        price_max: data.price_max
+      }).toString()
+    })
+  })
+
   return (
     <div className='space-y-5 rounded border border-color-border-primary-dark p-5 dark:border-none dark:bg-color-bg-dark-primary'>
       <div>
@@ -57,12 +92,47 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
         </h4>
         <div>
           <h5 className='mb-3 font-semibold'>Price Range</h5>
-          <form>
+          <form onSubmit={onSubmit}>
             <div className='flex items-center gap-2'>
-              <Input classNameError='mt-0' type='number' className='grow' placeholder='from' name='from' />
+              <Controller
+                control={control}
+                name='price_min'
+                render={({ field }) => {
+                  return (
+                    <InputNumber
+                      classNameError='mt-0'
+                      className='grow'
+                      placeholder='from'
+                      {...field}
+                      onchange={(event) => {
+                        field.onChange(event)
+                        trigger('price_max')
+                      }}
+                    />
+                  )
+                }}
+              />
               <div>-</div>
-              <Input classNameError='mt-0' type='number' className='grow' placeholder='to' name='to' />
+              <Controller
+                control={control}
+                name='price_max'
+                render={({ field }) => {
+                  return (
+                    <InputNumber
+                      classNameError='mt-0'
+                      className='grow'
+                      placeholder='to'
+                      {...field}
+                      onchange={(event) => {
+                        field.onChange(event)
+                        trigger('price_min')
+                      }}
+                    />
+                  )
+                }}
+              />
             </div>
+            <div className='mt-2 text-center text-color-danger'>{errors.price_min?.message}</div>
             <Button className='mt-3 w-full rounded-lg bg-color-primary px-5 py-2.5 text-center text-sm text-color-text-light transition-all hover:bg-color-primary-active focus:bg-color-primary-active'>
               Apply
             </Button>

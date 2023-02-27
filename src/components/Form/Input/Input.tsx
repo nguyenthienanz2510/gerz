@@ -11,11 +11,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export default function Input({
-  type,
   name,
-  placeholder,
   className,
-  autoComplete,
   errorMessage,
   register,
   rules,
@@ -27,18 +24,13 @@ export default function Input({
        ? 'border-color-danger'
        : 'focus:border-color border-gray-300 focus:border-color-primary dark:border-gray-600  dark:focus:border-color-primary'
    }`,
-  classNameError = 'mt-2 text-color-danger'
+  classNameError = 'mt-2 text-color-danger',
+  ...rest
 }: InputProps) {
-  const registerResult = register && name ? register(name, rules) : {}
+  const registerResult = register && name ? register(name, rules) : null
   return (
     <div className={className}>
-      <input
-        type={type}
-        placeholder={placeholder}
-        autoComplete={autoComplete}
-        className={classNameInput}
-        {...registerResult}
-      />
+      <input className={classNameInput} {...registerResult} {...rest} />
       <div className={classNameError}>{errorMessage}</div>
     </div>
   )

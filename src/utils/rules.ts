@@ -56,6 +56,14 @@ import * as yup from 'yup'
 //   }
 // })
 
+function testPrice(this: yup.TestContext<yup.AnyObject>) {
+  const { price_min, price_max } = this.parent
+  if (price_min !== '' && price_max !== '') {
+    return Number(price_max) >= Number(price_min)
+  }
+  return price_min !== '' || price_max !== ''
+}
+
 // Rules validation using Yup schema validation
 export const schema = yup.object({
   email: yup
@@ -70,7 +78,17 @@ export const schema = yup.object({
     .required('Confirm password is require')
     .min(6, 'Length from 6-160 characters')
     .max(160, 'Length from 6-160 characters')
-    .oneOf([yup.ref('password')], 'Confirm password is not same with Password')
+    .oneOf([yup.ref('password')], 'Confirm password is not same with Password'),
+  price_min: yup.string().test({
+    name: 'price-not-allowed',
+    message: 'Invalid price',
+    test: testPrice
+  }),
+  price_max: yup.string().test({
+    name: 'price-not-allowed',
+    message: 'Invalid price',
+    test: testPrice
+  })
 })
 
 export type Schema = yup.InferType<typeof schema>
