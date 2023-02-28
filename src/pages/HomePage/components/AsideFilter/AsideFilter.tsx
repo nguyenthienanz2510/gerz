@@ -2,15 +2,18 @@ import { faCaretRight, faLeaf, faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { yupResolver } from '@hookform/resolvers/yup'
 import classNames from 'classnames'
+import { omit } from 'lodash'
 import { Controller, useForm } from 'react-hook-form'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import Button from 'src/components/Button'
 import InputNumber from 'src/components/Form/InputNumber'
+import ProductRating from 'src/components/ProductRating'
 import path from 'src/constant/path'
 import { Category } from 'src/types/category.type'
 import { NoUndefinedField } from 'src/types/utils.type'
 import { Schema, schema } from 'src/utils/rules'
-import { QueryConfig } from '../HomePage'
+import { array } from 'yup'
+import { QueryConfig } from '../../HomePage'
 
 interface AsideFilterProps {
   queryConfig: QueryConfig
@@ -27,7 +30,6 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
   const {
     control,
     handleSubmit,
-    watch,
     trigger,
     formState: { errors }
   } = useForm<formData>({
@@ -38,7 +40,6 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
     resolver: yupResolver(priceSchema),
     shouldFocusError: false
   })
-  console.log(errors)
 
   const onSubmit = handleSubmit((data) => {
     navigate({
@@ -50,6 +51,13 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
       }).toString()
     })
   })
+
+  const handleRemoveAll = () => {
+    navigate({
+      pathname: path.home,
+      search: createSearchParams(omit(queryConfig, ['price_min', 'price_max', 'rating_filter', 'category'])).toString()
+    })
+  }
 
   return (
     <div className='space-y-5 rounded border border-color-border-primary-dark p-5 dark:border-none dark:bg-color-bg-dark-primary'>
@@ -76,7 +84,7 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
                     }).toString()
                   }}
                   className={classNames('inline-block py-1', {
-                    'text-color-primary': isActive || !category
+                    'font-semibold text-color-primary': isActive || !category
                   })}
                 >
                   {categoryItem.name}
@@ -141,56 +149,36 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
         <div>
           <h5 className='mt-5 mb-2 font-semibold'>Feedback</h5>
           <ul>
-            <li>
-              <Link to={path.home} className='inline-block py-1'>
-                {Array(5)
-                  .fill(0)
-                  .map((_, index) => {
-                    return <FontAwesomeIcon key={index} icon={faStar} size={'1x'} color={'#FFCC00'} />
-                  })}
-              </Link>
-            </li>
-            <li>
-              <Link to={path.home} className='inline-block py-1'>
-                {Array(4)
-                  .fill(0)
-                  .map((_, index) => {
-                    return <FontAwesomeIcon key={index} icon={faStar} size={'1x'} color={'#FFCC00'} />
-                  })}
-              </Link>
-            </li>
-            <li>
-              <Link to={path.home} className='inline-block py-1'>
-                {Array(3)
-                  .fill(0)
-                  .map((_, index) => {
-                    return <FontAwesomeIcon key={index} icon={faStar} size={'1x'} color={'#FFCC00'} />
-                  })}
-              </Link>
-            </li>
-            <li>
-              <Link to={path.home} className='inline-block py-1'>
-                {Array(2)
-                  .fill(0)
-                  .map((_, index) => {
-                    return <FontAwesomeIcon key={index} icon={faStar} size={'1x'} color={'#FFCC00'} />
-                  })}
-              </Link>
-            </li>
-            <li>
-              <Link to={path.home} className='inline-block py-1'>
-                {Array(1)
-                  .fill(0)
-                  .map((_, index) => {
-                    return <FontAwesomeIcon key={index} icon={faStar} size={'1x'} color={'#FFCC00'} />
-                  })}
-              </Link>
-            </li>
+            {Array(5)
+              .fill(0)
+              .map((_, index) => {
+                const star = 5 - index
+                return (
+                  <li key={index}>
+                    <Link
+                      to={{
+                        pathname: path.home,
+                        search: createSearchParams({
+                          ...queryConfig,
+                          rating_filter: String(star)
+                        }).toString()
+                      }}
+                      className='inline-block py-1'
+                    >
+                      <ProductRating rating={star} size={'lg'} />
+                    </Link>
+                    {star < 5 && <span className='ml-2'>Above</span>}
+                  </li>
+                )
+              })}
           </ul>
         </div>
       </div>
       <div className='border-t border-color-border-primary-dark dark:border-color-border-primary-light'>
-        <Button className='mt-5 w-full rounded-lg bg-color-secondary px-5 py-2.5 text-center text-sm text-color-text-light transition-all hover:bg-color-secondary-active focus:bg-color-secondary-active'>
+        <Button
+          onClick={handleRemoveAll}
+          className='mt-5 w-full rounded-lg bg-color-secondary px-5 py-2.5 text-center text-sm text-color-text-light transition-all hover:bg-color-secondary-active focus:bg-color-secondary-active'
+        >
           CLEAR ALL
         </Button>
       </div>

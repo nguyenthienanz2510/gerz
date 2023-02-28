@@ -2,7 +2,12 @@ import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { faStar as faNoStar } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export default function ProductRating({ rating }: { rating: number }) {
+interface ProductRatingProps {
+  rating: number
+  size?: '1x' | 'xs' | 'lg' | 'xl'
+}
+
+export default function ProductRating({ rating, size = '1x' }: ProductRatingProps) {
   const handleRatingWidth = (order: number) => {
     if (rating >= order) {
       return '100%'
@@ -23,9 +28,9 @@ export default function ProductRating({ rating }: { rating: number }) {
                 className='absolute top-0 left-0 h-full overflow-hidden'
                 style={{ width: handleRatingWidth(index + 1) }}
               >
-                <FontAwesomeIcon icon={faStar} size={'1x'} color={'#FFCC00'} />
+                <FontAwesomeIcon icon={faStar} size={size} color={'#FFCC00'} />
               </div>
-              <FontAwesomeIcon icon={faNoStar} size={'1x'} color={'#FFCC00'} />
+              <FontAwesomeIcon icon={faNoStar} size={size} color={'#FFCC00'} />
             </div>
           )
         })}
