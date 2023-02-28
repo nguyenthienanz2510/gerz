@@ -12,7 +12,6 @@ import path from 'src/constant/path'
 import { Category } from 'src/types/category.type'
 import { NoUndefinedField } from 'src/types/utils.type'
 import { Schema, schema } from 'src/utils/rules'
-import { array } from 'yup'
 import { QueryConfig } from '../../HomePage'
 
 interface AsideFilterProps {

@@ -39,6 +39,8 @@ module.exports = {
         'color-bg-dark-primary': '#1d1e23',
         'color-bg-dark-secondary': '#121215',
         'color-border-primary-light': '#374151',
+        'color-bg-white-40': '#ffffff66',
+        'color-bg-white-60': '#ffffff99',
         'color-border-primary-dark': '#3435391a'
       },
       fontSize: {
