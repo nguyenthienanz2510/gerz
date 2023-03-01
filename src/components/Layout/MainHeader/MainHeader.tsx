@@ -2,7 +2,8 @@ import {
   faCartShopping,
   faPhone,
   faRightFromBracket,
-  faRightToBracket, faUser
+  faRightToBracket,
+  faUser
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMutation } from '@tanstack/react-query'
@@ -15,12 +16,24 @@ import SelectLanguage from 'src/components/SelectLanguage'
 import SwitchThemeButton from 'src/components/SwitchThemeButton'
 import path from 'src/constant/path'
 import { AppContext } from 'src/context/app.context'
+
 import Navbar from './Navbar'
+import SearchProduct from './SearchProduct'
+
+
 
 export default function MainHeader() {
   const [isFixedHeader, setIsFixedHeader] = useState(false)
   const { isAuthenticated, setIsAuthenticated, userProfile, setUserProfile } = useContext(AppContext)
   const HEADER_HEIGHT = 180
+  
+
+  useEffect(() => {
+    window.scrollY > HEADER_HEIGHT ? setIsFixedHeader(true) : setIsFixedHeader(false)
+  }, [])
+  window.onscroll = () => {
+    window.scrollY > HEADER_HEIGHT ? setIsFixedHeader(true) : setIsFixedHeader(false)
+  }
 
   const logoutMutation = useMutation({
     mutationFn: () => authApi.logoutAccount(),
@@ -34,12 +47,6 @@ export default function MainHeader() {
     logoutMutation.mutate()
   }
 
-  useEffect(() => {
-    window.scrollY > HEADER_HEIGHT ? setIsFixedHeader(true) : setIsFixedHeader(false)
-  }, [])
-  window.onscroll = () => {
-    window.scrollY > HEADER_HEIGHT ? setIsFixedHeader(true) : setIsFixedHeader(false)
-  }
   return (
     <header className='hidden bg-color-bg-dark-primary sm:block'>
       <div className='container mx-auto flex h-32 items-center justify-between'>
@@ -177,8 +184,9 @@ export default function MainHeader() {
         )}
       </div>
       <div className='border-t-2 border-t-color-bg-dark-secondary'>
-        <div className='container mx-auto flex h-16 items-center'>
+        <div className='container mx-auto flex h-16 items-center justify-between'>
           <Navbar />
+          <SearchProduct />
         </div>
       </div>
       <div
@@ -186,8 +194,9 @@ export default function MainHeader() {
           isFixedHeader ? 'top-0' : 'top-[-64px]'
         } left-0 right-0 z-50 border-t-2 border-t-color-bg-dark-secondary bg-[rgba(29,30,35,0.92)] backdrop-blur-md duration-500`}
       >
-        <div className='container mx-auto flex h-16 items-center'>
+        <div className='container mx-auto flex h-16 items-center justify-between'>
           <Navbar />
+          <SearchProduct />
         </div>
       </div>
     </header>

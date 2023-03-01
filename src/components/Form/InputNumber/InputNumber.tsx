@@ -6,6 +6,7 @@ interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
   rules?: RegisterOptions
   classNameInput?: string
   classNameError?: string
+  showError?: boolean
   onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -13,14 +14,14 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function Inpu
   {
     className,
     errorMessage,
-    classNameInput = ` block w-full rounded-lg border 
-  bg-gray-50 p-2.5 text-color-text-dark ring-color-primary 
-   dark:bg-gray-700 dark:text-color-text-light dark:placeholder-gray-300 
-   dark:focus:ring-color-primary sm:text-sm ${
-     errorMessage
-       ? 'border-color-danger'
-       : 'focus:border-color border-gray-300 focus:border-color-primary dark:border-gray-600  dark:focus:border-color-primary'
-   }`,
+    classNameInput = ` block w-full border 
+    bg-gray-100 h-10 px-3 text-color-text-dark ring-color-primary 
+    sm:text-sm ${
+      errorMessage
+        ? 'border-color-danger'
+        : 'border-gray-300 focus:border-color-primary dark:border-gray-600  dark:focus:border-color-primary'
+    }`,
+    showError,
     classNameError = 'mt-2 text-color-danger',
     onchange,
     ...rest
@@ -36,7 +37,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function Inpu
   return (
     <div className={className}>
       <input className={classNameInput} {...rest} onChange={handleChange} ref={ref} />
-      <div className={classNameError}>{errorMessage}</div>
+      {showError && <div className={classNameError}>{errorMessage}</div>}
     </div>
   )
 })

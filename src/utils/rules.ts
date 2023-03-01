@@ -88,7 +88,8 @@ export const schema = yup.object({
     name: 'price-not-allowed',
     message: 'Invalid price',
     test: testPrice
-  })
+  }),
+  search: yup.string().trim().required('Product name is required')
 })
 
 export type Schema = yup.InferType<typeof schema>

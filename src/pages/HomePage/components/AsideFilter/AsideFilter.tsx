@@ -110,6 +110,7 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
                       classNameError='mt-0'
                       className='grow'
                       placeholder='from'
+                      errorMessage={errors.price_min?.message}
                       {...field}
                       onchange={(event) => {
                         field.onChange(event)
@@ -129,6 +130,7 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
                       classNameError='mt-0'
                       className='grow'
                       placeholder='to'
+                      errorMessage={errors.price_min?.message}
                       {...field}
                       onchange={(event) => {
                         field.onChange(event)
