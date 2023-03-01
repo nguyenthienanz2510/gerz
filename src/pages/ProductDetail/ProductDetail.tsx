@@ -1,13 +1,14 @@
 import { faChevronLeft, faChevronRight, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useQuery } from '@tanstack/react-query'
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
 import InputNumber from 'src/components/Form/InputNumber'
 import ProductRating from 'src/components/ProductRating'
 import { formatCurrency, formatNumberToSocialStyle, rateSale } from 'src/utils/utils'
-import DOMPurify from 'dompurify';
+import DOMPurify from 'dompurify'
+import { Product } from 'src/types/product.type'
 
 export default function ProductDetail() {
   const { id } = useParams()
@@ -16,7 +17,39 @@ export default function ProductDetail() {
     queryFn: () => productApi.getProductDetail(id as string)
   })
   const productDetail = data?.data.data
+
+  const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
+  const [activeImage, setActiveImage] = useState('')
+
+  const currentImages = useMemo(
+    () => (productDetail ? productDetail.images.slice(...currentIndexImages) : []),
+    [productDetail, currentIndexImages]
+  )
+
   console.log(productDetail)
+
+  useEffect(() => {
+    if (productDetail && productDetail.images.length > 0) {
+      setActiveImage(productDetail.images[0])
+    }
+  }, [productDetail])
+
+  const chooseActiveImage = (img: string) => {
+    setActiveImage(img)
+  }
+
+  const sliderImageNext = () => {
+    if (currentIndexImages[1] < (productDetail as Product).images.length) {
+      setCurrentIndexImages((prev) => [prev[0] + 1, prev[1] + 1])
+    }
+  }
+
+  const sliderImagePrev = () => {
+    if (currentIndexImages[0] !== 0) {
+      setCurrentIndexImages((prev) => [prev[0] - 1, prev[1] - 1])
+    }
+  }
+
   if (!productDetail) return null
   return (
     <div>
@@ -25,17 +58,21 @@ export default function ProductDetail() {
           <div className='col-span-5'>
             <div className='relative w-full pt-[100%] shadow-lg'>
               <img
-                src={productDetail.image}
+                src={activeImage}
                 alt={productDetail.name}
                 title={productDetail.name}
                 className='absolute top-0 left-0 h-full w-full'
               />
             </div>
             <div className='relative mt-2 grid grid-cols-5 gap-1'>
-              {productDetail.images.slice(0, 5).map((img, index) => {
-                const isActive = index === 0
+              {currentImages.slice(0, 5).map((img, index) => {
+                const isActive = img === activeImage
                 return (
-                  <div className='relative col-span-1 w-full pt-[100%] shadow-md' key={index}>
+                  <div
+                    className='relative col-span-1 w-full pt-[100%] shadow-md'
+                    key={index}
+                    onMouseEnter={() => chooseActiveImage(img)}
+                  >
                     <img
                       src={img}
                       alt={productDetail.name}
@@ -46,10 +83,16 @@ export default function ProductDetail() {
                   </div>
                 )
               })}
-              <button className='absolute left-[2px] top-1/2 z-10 h-10 w-10 -translate-y-1/2 bg-color-bg-white-40 transition-all hover:bg-color-bg-white-60'>
+              <button
+                className='absolute left-[2px] top-1/2 z-10 h-10 w-10 -translate-y-1/2 bg-color-bg-white-40 transition-all hover:bg-color-bg-white-60'
+                onClick={sliderImagePrev}
+              >
                 <FontAwesomeIcon icon={faChevronLeft} size={'2x'} color={'#FFCC00'} />
               </button>
-              <button className='absolute right-[2px] top-1/2 z-10 h-10 w-10 -translate-y-1/2 bg-color-bg-white-40 transition-all hover:bg-color-bg-white-60'>
+              <button
+                className='absolute right-[2px] top-1/2 z-10 h-10 w-10 -translate-y-1/2 bg-color-bg-white-40 transition-all hover:bg-color-bg-white-60'
+                onClick={sliderImageNext}
+              >
                 {' '}
                 <FontAwesomeIcon icon={faChevronRight} size={'2x'} color={'#FFCC00'} />
               </button>
