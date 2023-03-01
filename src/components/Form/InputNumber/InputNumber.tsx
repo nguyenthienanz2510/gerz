@@ -1,5 +1,5 @@
 import { forwardRef, InputHTMLAttributes } from 'react'
-import type { RegisterOptions, UseFormRegister } from 'react-hook-form'
+import type { RegisterOptions } from 'react-hook-form'
 
 interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string

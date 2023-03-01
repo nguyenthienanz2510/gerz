@@ -8,10 +8,6 @@ import AsideFilter from './components/AsideFilter'
 import Product from './components/Product'
 import SortProducts from './components/SortProducts'
 
-export type QueryConfig = {
-  [key in keyof ProductListConfig]: string
-}
-
 export default function HomePage() {
   const queryConfig = useQueryConfig()
 
@@ -20,7 +16,8 @@ export default function HomePage() {
     queryFn: () => {
       return productApi.getProducts(queryConfig as ProductListConfig)
     },
-    keepPreviousData: true
+    keepPreviousData: true,
+    staleTime: 2 * 60 * 1000
   })
 
   const { data: categoriesData } = useQuery({

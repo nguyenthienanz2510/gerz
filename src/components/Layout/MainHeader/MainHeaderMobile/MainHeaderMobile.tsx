@@ -9,6 +9,7 @@ import SelectLanguage from 'src/components/SelectLanguage'
 import SwitchThemeButton from 'src/components/SwitchThemeButton'
 import path from 'src/constant/path'
 import { AppContext } from 'src/context/app.context'
+import SearchProduct from '../SearchProduct'
 import NavbarMobile from './NavbarMobile'
 
 export default function MainHeaderMobile() {
@@ -81,7 +82,7 @@ export default function MainHeaderMobile() {
             {isUserOpen && (
               <div
                 className={`flex flex-col border-b-2 border-color-black text-color-text-light transition-all duration-300 ease-in-out ${
-                  isUserOpen ? 'block h-auto' : 'h-0 hidden'
+                  isUserOpen ? 'block h-auto' : 'hidden h-0'
                 }`}
               >
                 <div className='border-b border-color-black py-3 px-3'>
@@ -142,6 +143,9 @@ export default function MainHeaderMobile() {
         )}
 
         <NavbarMobile />
+        <div className='border-t-2 border-color-bg-dark-secondary'>
+          <SearchProduct />
+        </div>
       </div>
     </header>
   )

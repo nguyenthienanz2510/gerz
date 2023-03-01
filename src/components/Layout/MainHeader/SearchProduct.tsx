@@ -40,8 +40,7 @@ export default function SearchProduct() {
       <input
         placeholder='Search...'
         type='text'
-        className='focus:border-color block w-full border border-gray-300 bg-gray-100 py-2 px-3
-        text-color-text-dark'
+        className='focus:border-color block w-full border border-gray-300 bg-gray-100 py-4 px-3 text-14 text-color-text-dark sm:py-2 sm:px-3'
         {...register('search')}
       />
       <button className='absolute top-0 right-0 h-full w-10'>

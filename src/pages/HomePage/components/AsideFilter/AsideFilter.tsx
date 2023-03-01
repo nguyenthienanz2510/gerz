@@ -9,10 +9,10 @@ import Button from 'src/components/Button'
 import InputNumber from 'src/components/Form/InputNumber'
 import ProductRating from 'src/components/ProductRating'
 import path from 'src/constant/path'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { Category } from 'src/types/category.type'
 import { NoUndefinedField } from 'src/types/utils.type'
 import { Schema, schema } from 'src/utils/rules'
-import { QueryConfig } from '../../HomePage'
 
 interface AsideFilterProps {
   queryConfig: QueryConfig

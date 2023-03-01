@@ -8,7 +8,8 @@ import InputNumber from 'src/components/Form/InputNumber'
 import ProductRating from 'src/components/ProductRating'
 import { formatCurrency, formatNumberToSocialStyle, getIdFromProductSlug, rateSale } from 'src/utils/utils'
 import DOMPurify from 'dompurify'
-import { Product } from 'src/types/product.type'
+import { Product as ProductType, ProductListConfig } from 'src/types/product.type'
+import Product from '../HomePage/components/Product'
 
 export default function ProductDetail() {
   const { productSlug } = useParams()
@@ -28,7 +29,15 @@ export default function ProductDetail() {
     [productDetail, currentIndexImages]
   )
 
-  console.log(productDetail)
+  const queryConfig: ProductListConfig = { limit: 12, page: 1, category: productDetail?.category._id }
+  const { data: productsData } = useQuery({
+    queryKey: ['products', queryConfig],
+    queryFn: () => {
+      return productApi.getProducts(queryConfig)
+    },
+    enabled: Boolean(productDetail),
+    staleTime: 2 * 60 * 1000
+  })
 
   useEffect(() => {
     if (productDetail && productDetail.images.length > 0) {
@@ -41,7 +50,7 @@ export default function ProductDetail() {
   }
 
   const sliderImageNext = () => {
-    if (currentIndexImages[1] < (productDetail as Product).images.length) {
+    if (currentIndexImages[1] < (productDetail as ProductType).images.length) {
       setCurrentIndexImages((prev) => [prev[0] + 1, prev[1] + 1])
     }
   }
@@ -74,8 +83,8 @@ export default function ProductDetail() {
   return (
     <div>
       <div className='container mx-auto'>
-        <div className='grid grid-cols-12 gap-10'>
-          <div className='col-span-5'>
+        <div className='grid grid-cols-12 gap-y-7 sm:gap-10'>
+          <div className='col-span-12 sm:col-span-5'>
             <div
               className='relative w-full overflow-hidden pt-[100%] shadow-lg hover:cursor-zoom-in'
               onMouseMove={handleImageZoom}
@@ -123,7 +132,7 @@ export default function ProductDetail() {
               </button>
             </div>
           </div>
-          <div className='col-span-7 space-y-5'>
+          <div className='col-span-12 space-y-3 sm:space-y-4 lg:space-y-5 sm:col-span-7'>
             <h1 className='text-xl font-semibold'>{productDetail.name}</h1>
             <div className='flex'>
               <div className='flex items-center gap-2'>
@@ -138,7 +147,7 @@ export default function ProductDetail() {
                 <span className='font-medium text-color-primary'>Sold</span>
               </div>
             </div>
-            <div className='flex items-center gap-5'>
+            <div className='flex flex-wrap items-center gap-x-5'>
               <span className='text-20 text-color-text-gray-dark line-through dark:text-color-text-gray-light'>
                 {formatCurrency(productDetail.price_before_discount)} VND
               </span>
@@ -155,9 +164,11 @@ export default function ProductDetail() {
                 <button className='h-10 w-10 rounded-lg border border-color-border-primary-dark transition-all hover:bg-color-primary hover:text-color-text-light dark:border-color-border-primary-light'>
                   <FontAwesomeIcon icon={faMinus} />
                 </button>
-                <div className='h-10 w-16'>
-                  <InputNumber />
-                </div>
+                <InputNumber
+                  defaultValue={1}
+                  className='w-12'
+                  classNameInput='focus:border-color-primary rounded-lg border border-color-border-primary-dark transition-all w-full px-2 text-center h-full dark:border-color-border-primary-light'
+                />
                 <button className='h-10 w-10 rounded-lg border border-color-border-primary-dark transition-all hover:bg-color-primary hover:text-color-text-light dark:border-color-border-primary-light'>
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
@@ -175,11 +186,24 @@ export default function ProductDetail() {
           </div>
         </div>
         <div className='mt-10'>
-          <h4 className='text-18 font-semibold'>Product Detail</h4>
+          <h4 className='text-20 font-semibold'>Product Detail</h4>
           <div
             className='description mt-4'
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(productDetail.description) }}
           />
+        </div>
+        <div className='mt-10'>
+          <h4 className='mb-4 text-20 font-semibold'>You may also like</h4>
+          <div className='grid grid-cols-2 gap-x-3 gap-y-4 sm:grid-cols-3 md:grid-cols-4 md:gap-x-5 md:gap-y-7 xl:grid-cols-5'>
+            {productsData &&
+              productsData.data.data.products.map((product) => {
+                return (
+                  <div className='col-span-1' key={product._id}>
+                    <Product product={product} />
+                  </div>
+                )
+              })}
+          </div>
         </div>
       </div>
     </div>
