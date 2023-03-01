@@ -1,7 +1,7 @@
 import { faChevronLeft, faChevronRight, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useQuery } from '@tanstack/react-query'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
 import InputNumber from 'src/components/Form/InputNumber'
@@ -20,6 +20,7 @@ export default function ProductDetail() {
 
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
   const [activeImage, setActiveImage] = useState('')
+  const imageRef = useRef<HTMLImageElement>(null)
 
   const currentImages = useMemo(
     () => (productDetail ? productDetail.images.slice(...currentIndexImages) : []),
@@ -50,18 +51,41 @@ export default function ProductDetail() {
     }
   }
 
+  const handleImageZoom = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    const image = imageRef.current as HTMLImageElement
+    const { naturalHeight, naturalWidth } = image
+    const { offsetX, offsetY } = event.nativeEvent
+    const top = offsetY * (1 - naturalHeight / rect.height)
+    const left = offsetX * (1 - naturalWidth / rect.width)
+    image.style.width = naturalWidth + 'px'
+    image.style.height = naturalHeight + 'px'
+    image.style.maxWidth = 'unset'
+    image.style.top = top + 'px'
+    image.style.left = left + 'px'
+  }
+
+  const handleRemoveImageZoom = () => {
+    imageRef.current?.removeAttribute('style')
+  }
+
   if (!productDetail) return null
   return (
     <div>
       <div className='container mx-auto'>
         <div className='grid grid-cols-12 gap-10'>
           <div className='col-span-5'>
-            <div className='relative w-full pt-[100%] shadow-lg'>
+            <div
+              className='relative w-full overflow-hidden pt-[100%] shadow-lg hover:cursor-zoom-in'
+              onMouseMove={handleImageZoom}
+              onMouseLeave={handleRemoveImageZoom}
+            >
               <img
                 src={activeImage}
                 alt={productDetail.name}
                 title={productDetail.name}
-                className='absolute top-0 left-0 h-full w-full'
+                className='pointer-events-none absolute top-0 left-0 h-full w-full'
+                ref={imageRef}
               />
             </div>
             <div className='relative mt-2 grid grid-cols-5 gap-1'>
