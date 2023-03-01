@@ -6,12 +6,13 @@ import { useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
 import InputNumber from 'src/components/Form/InputNumber'
 import ProductRating from 'src/components/ProductRating'
-import { formatCurrency, formatNumberToSocialStyle, rateSale } from 'src/utils/utils'
+import { formatCurrency, formatNumberToSocialStyle, getIdFromProductSlug, rateSale } from 'src/utils/utils'
 import DOMPurify from 'dompurify'
 import { Product } from 'src/types/product.type'
 
 export default function ProductDetail() {
-  const { id } = useParams()
+  const { productSlug } = useParams()
+  const id = getIdFromProductSlug(productSlug as string)
   const { data } = useQuery({
     queryKey: ['product', id],
     queryFn: () => productApi.getProductDetail(id as string)
@@ -167,7 +168,7 @@ export default function ProductDetail() {
               <button className='rounded border border-color-primary bg-color-primary px-6 py-3 text-16 font-semibold text-color-text-light hover:bg-color-primary-active'>
                 Add to cart
               </button>
-              <button className='rounded border border-color-primary px-6 py-3 text-16 font-semibold text-color-primary'>
+              <button className='rounded border border-color-primary px-6 py-3 text-16 font-semibold text-color-primary hover:border-color-primary-active hover:text-color-primary-active'>
                 Buy now
               </button>
             </div>
