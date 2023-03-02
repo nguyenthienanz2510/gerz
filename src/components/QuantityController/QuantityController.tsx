@@ -60,7 +60,6 @@ export default function QuantityController({
         <FontAwesomeIcon icon={faMinus} />
       </button>
       <InputNumber
-        defaultValue={1}
         className='w-12'
         classNameInput='focus:border-color-primary border border-color-border-primary-dark transition-all w-full px-2 text-color-text-dark font-semibold text-center h-full dark:border-color-border-primary-light'
         onchange={handleChange}

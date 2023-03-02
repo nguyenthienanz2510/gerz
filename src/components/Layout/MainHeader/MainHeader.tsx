@@ -6,7 +6,7 @@ import {
   faUser
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import authApi from 'src/apis/auth.api'
@@ -25,6 +25,7 @@ import SearchProduct from './SearchProduct'
 const MAX_PRODUCT_PURCHASE_IN_CART = 5
 
 export default function MainHeader() {
+  const queryClient = useQueryClient()
   const [isFixedHeader, setIsFixedHeader] = useState(false)
   const { isAuthenticated, setIsAuthenticated, userProfile, setUserProfile } = useContext(AppContext)
   const HEADER_HEIGHT = 180
@@ -41,12 +42,14 @@ export default function MainHeader() {
     onSuccess: () => {
       setIsAuthenticated(false)
       setUserProfile(null)
+      queryClient.removeQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
     }
   })
 
   const { data: purchasesInCartData } = useQuery({
     queryKey: ['purchases', { status: purchasesStatus.inCart }],
-    queryFn: () => purchaseApi.getPurchases({ status: purchasesStatus.inCart })
+    queryFn: () => purchaseApi.getPurchases({ status: purchasesStatus.inCart }),
+    enabled: isAuthenticated
   })
 
   const purchasesInCart = purchasesInCartData?.data.data
@@ -141,13 +144,15 @@ export default function MainHeader() {
                 </div>
               }
             >
-              <button className='h-10 w-10'>
-                <FontAwesomeIcon icon={faCartShopping} size={'xl'} color={'#feffff'} />
-              </button>
-              <div className='flex flex-col items-center'>
-                <span>Your cart:</span>
-                <span className='text-color-text-gray-light'>{purchasesInCart?.length} items - $ 0.00</span>
-              </div>
+              <Link to={path.cart} className='flex flex-col items-center'>
+                <button className='h-10 w-10'>
+                  <FontAwesomeIcon icon={faCartShopping} size={'xl'} color={'#feffff'} />
+                </button>
+                <div className='flex flex-col items-center'>
+                  <span>Your cart:</span>
+                  <span className='text-color-text-gray-light'>{purchasesInCart?.length} items - $ 0.00</span>
+                </div>
+              </Link>
             </Popover>
             <Popover
               className='button__hover--primary flex flex-col items-center'
@@ -186,13 +191,15 @@ export default function MainHeader() {
                 </div>
               }
             >
-              <button className='h-10 w-10'>
-                <FontAwesomeIcon icon={faUser} size={'xl'} color={'#feffff'} />
-              </button>
-              <div className='flex flex-col items-center'>
-                <span>Profile</span>
-                <span className='text-color-text-gray-light'>{userProfile?.email || 'Username'}</span>
-              </div>
+              <Link to={path.profile} className='flex flex-col items-center'>
+                <button className='h-10 w-10'>
+                  <FontAwesomeIcon icon={faUser} size={'xl'} color={'#feffff'} />
+                </button>
+                <div className='flex flex-col items-center'>
+                  <span>Profile</span>
+                  <span className='text-color-text-gray-light'>{userProfile?.email || 'Username'}</span>
+                </div>
+              </Link>
             </Popover>
           </div>
         ) : (
