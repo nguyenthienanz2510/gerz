@@ -1,6 +1,6 @@
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import InputNumber, { InputNumberProps } from '../Form/InputNumber'
 
 interface QuantityControllerProps extends InputNumberProps {
@@ -8,6 +8,7 @@ interface QuantityControllerProps extends InputNumberProps {
   onIncrease?: (value: number) => void
   onDecrease?: (value: number) => void
   onChangeInputNumber?: (value: number) => void
+  onFocusOut?: (value: number) => void
   classNameWrapper?: string
 }
 
@@ -16,6 +17,7 @@ export default function QuantityController({
   onIncrease,
   onDecrease,
   onChangeInputNumber,
+  onFocusOut,
   classNameWrapper,
   value,
   ...rest
@@ -47,8 +49,13 @@ export default function QuantityController({
     if (_value < 1) {
       _value = 1
     }
+    console.log(_value)
     onDecrease && onDecrease(_value)
     setLocalValue(_value)
+  }
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement, Element>) => {
+    onFocusOut && onFocusOut(Number(event.target.value))
   }
 
   return (
@@ -64,6 +71,7 @@ export default function QuantityController({
         classNameInput='focus:border-color-primary border dark:focus:border-color-primary border-color-border-primary-dark transition-all w-full px-2 text-color-text-dark font-semibold text-center h-full dark:border-color-border-primary-light'
         onchange={handleChange}
         value={value || localValue}
+        onBlur={handleBlur}
         {...rest}
       />
       <button
