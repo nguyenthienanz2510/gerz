@@ -52,7 +52,7 @@ export default function QuantityController({
   }
 
   return (
-    <div className={'flex ' + classNameWrapper}>
+    <div className={classNameWrapper ? 'flex min-w-[128px]' + classNameWrapper : 'flex min-w-[128px]'}>
       <button
         onClick={decrease}
         className='h-10 w-10 rounded-l-lg border border-color-border-primary-dark border-r-transparent transition-all hover:bg-color-primary hover:text-color-text-light dark:border-color-border-primary-light'
@@ -61,7 +61,7 @@ export default function QuantityController({
       </button>
       <InputNumber
         className='w-12'
-        classNameInput='focus:border-color-primary border border-color-border-primary-dark transition-all w-full px-2 text-color-text-dark font-semibold text-center h-full dark:border-color-border-primary-light'
+        classNameInput='focus:border-color-primary border dark:focus:border-color-primary border-color-border-primary-dark transition-all w-full px-2 text-color-text-dark font-semibold text-center h-full dark:border-color-border-primary-light'
         onchange={handleChange}
         value={value || localValue}
         {...rest}
