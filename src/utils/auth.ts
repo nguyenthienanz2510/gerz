@@ -23,5 +23,4 @@ export const getUserProfileFromLocalStorage = () => {
 
 export const clearUserProfileFromLocalStorage = () => {
   localStorage.removeItem('user_profile')
-
 }
