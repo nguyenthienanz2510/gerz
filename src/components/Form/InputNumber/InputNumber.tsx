@@ -1,7 +1,7 @@
 import { forwardRef, InputHTMLAttributes } from 'react'
 import type { RegisterOptions } from 'react-hook-form'
 
-interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputNumberProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
   rules?: RegisterOptions
   classNameInput?: string

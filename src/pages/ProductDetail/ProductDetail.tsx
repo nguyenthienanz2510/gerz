@@ -4,12 +4,12 @@ import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
-import InputNumber from 'src/components/Form/InputNumber'
 import ProductRating from 'src/components/ProductRating'
 import { formatCurrency, formatNumberToSocialStyle, getIdFromProductSlug, rateSale } from 'src/utils/utils'
 import DOMPurify from 'dompurify'
 import { Product as ProductType, ProductListConfig } from 'src/types/product.type'
 import Product from '../HomePage/components/Product'
+import QuantityController from 'src/components/QuantityController'
 
 export default function ProductDetail() {
   const { productSlug } = useParams()
@@ -22,7 +22,12 @@ export default function ProductDetail() {
 
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
   const [activeImage, setActiveImage] = useState('')
+  const [buyCount, setBuyCount] = useState(1)
   const imageRef = useRef<HTMLImageElement>(null)
+
+  const handleBuyCount = (value: number) => {
+    setBuyCount(value)
+  }
 
   const currentImages = useMemo(
     () => (productDetail ? productDetail.images.slice(...currentIndexImages) : []),
@@ -132,7 +137,7 @@ export default function ProductDetail() {
               </button>
             </div>
           </div>
-          <div className='col-span-12 space-y-3 sm:space-y-4 lg:space-y-5 sm:col-span-7'>
+          <div className='col-span-12 space-y-3 sm:col-span-7 sm:space-y-4 lg:space-y-5'>
             <h1 className='text-xl font-semibold'>{productDetail.name}</h1>
             <div className='flex'>
               <div className='flex items-center gap-2'>
@@ -160,19 +165,13 @@ export default function ProductDetail() {
             </div>
             <div className='flex items-center gap-4'>
               <span>Qty:</span>
-              <div className='flex gap-1'>
-                <button className='h-10 w-10 rounded-lg border border-color-border-primary-dark transition-all hover:bg-color-primary hover:text-color-text-light dark:border-color-border-primary-light'>
-                  <FontAwesomeIcon icon={faMinus} />
-                </button>
-                <InputNumber
-                  defaultValue={1}
-                  className='w-12'
-                  classNameInput='focus:border-color-primary rounded-lg border border-color-border-primary-dark transition-all w-full px-2 text-center h-full dark:border-color-border-primary-light'
-                />
-                <button className='h-10 w-10 rounded-lg border border-color-border-primary-dark transition-all hover:bg-color-primary hover:text-color-text-light dark:border-color-border-primary-light'>
-                  <FontAwesomeIcon icon={faPlus} />
-                </button>
-              </div>
+              <QuantityController
+                onIncrease={handleBuyCount}
+                onDecrease={handleBuyCount}
+                onChangeInputNumber={handleBuyCount}
+                value={buyCount}
+                max={productDetail.quantity}
+              />
               <span>{productDetail.quantity} In Stock</span>
             </div>
             <div className='flex gap-2'>
