@@ -199,7 +199,7 @@ export default function ProductDetail() {
               >
                 Add to cart
               </button>
-              <button className='rounded border border-color-primary px-6 py-3 text-16 font-semibold text-color-primary hover:border-color-primary-active hover:text-color-primary-active'>
+              <button className='rounded border border-color-primary px-6 py-3 text-16 font-semibold text-color-primary hover:border-color-primary-active hover:bg-color-primary-active hover:text-color-text-light'>
                 Buy now
               </button>
             </div>
