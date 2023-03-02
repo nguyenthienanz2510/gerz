@@ -1,6 +1,6 @@
 import { faChevronLeft, faChevronRight, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
@@ -10,24 +10,32 @@ import DOMPurify from 'dompurify'
 import { Product as ProductType, ProductListConfig } from 'src/types/product.type'
 import Product from '../HomePage/components/Product'
 import QuantityController from 'src/components/QuantityController'
+import purchaseApi from 'src/apis/purchase.api'
+import { purchasesStatus } from 'src/constant/purchasse'
+import { toast } from 'react-toastify'
 
 export default function ProductDetail() {
   const { productSlug } = useParams()
   const id = getIdFromProductSlug(productSlug as string)
+  const queryClient = useQueryClient()
   const { data } = useQuery({
     queryKey: ['product', id],
     queryFn: () => productApi.getProductDetail(id as string)
   })
   const productDetail = data?.data.data
 
+  const addToCartMutation = useMutation(purchaseApi.addToCart)
+
   const [currentIndexImages, setCurrentIndexImages] = useState([0, 5])
   const [activeImage, setActiveImage] = useState('')
   const [buyCount, setBuyCount] = useState(1)
   const imageRef = useRef<HTMLImageElement>(null)
 
-  const handleBuyCount = (value: number) => {
-    setBuyCount(value)
-  }
+  useEffect(() => {
+    if (productDetail && productDetail.images.length > 0) {
+      setActiveImage(productDetail.images[0])
+    }
+  }, [productDetail])
 
   const currentImages = useMemo(
     () => (productDetail ? productDetail.images.slice(...currentIndexImages) : []),
@@ -43,12 +51,6 @@ export default function ProductDetail() {
     enabled: Boolean(productDetail),
     staleTime: 2 * 60 * 1000
   })
-
-  useEffect(() => {
-    if (productDetail && productDetail.images.length > 0) {
-      setActiveImage(productDetail.images[0])
-    }
-  }, [productDetail])
 
   const chooseActiveImage = (img: string) => {
     setActiveImage(img)
@@ -82,6 +84,22 @@ export default function ProductDetail() {
 
   const handleRemoveImageZoom = () => {
     imageRef.current?.removeAttribute('style')
+  }
+
+  const handleBuyCount = (value: number) => {
+    setBuyCount(value)
+  }
+
+  const addToCart = () => {
+    addToCartMutation.mutate(
+      { buy_count: buyCount, product_id: productDetail?._id as string },
+      {
+        onSuccess: (data) => {
+          toast.success(data.data.message, { autoClose: 3 * 1000 })
+          queryClient.invalidateQueries({ queryKey: ['purchases', { status: purchasesStatus.inCart }] })
+        }
+      }
+    )
   }
 
   if (!productDetail) return null
@@ -175,7 +193,10 @@ export default function ProductDetail() {
               <span>{productDetail.quantity} In Stock</span>
             </div>
             <div className='flex gap-2'>
-              <button className='rounded border border-color-primary bg-color-primary px-6 py-3 text-16 font-semibold text-color-text-light hover:bg-color-primary-active'>
+              <button
+                onClick={addToCart}
+                className='rounded border border-color-primary bg-color-primary px-6 py-3 text-16 font-semibold text-color-text-light hover:bg-color-primary-active'
+              >
                 Add to cart
               </button>
               <button className='rounded border border-color-primary px-6 py-3 text-16 font-semibold text-color-primary hover:border-color-primary-active hover:text-color-primary-active'>

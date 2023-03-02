@@ -6,27 +6,28 @@ import {
   faUser
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import authApi from 'src/apis/auth.api'
+import purchaseApi from 'src/apis/purchase.api'
 import logo_main from 'src/assets/images/logos/logo-main.svg'
 import Popover from 'src/components/Popover'
 import SelectLanguage from 'src/components/SelectLanguage'
 import SwitchThemeButton from 'src/components/SwitchThemeButton'
 import path from 'src/constant/path'
+import { purchasesStatus } from 'src/constant/purchasse'
 import { AppContext } from 'src/context/app.context'
-
+import { formatCurrency, generateProductSlug } from 'src/utils/utils'
 import Navbar from './Navbar'
 import SearchProduct from './SearchProduct'
 
-
+const MAX_PRODUCT_PURCHASE_IN_CART = 5
 
 export default function MainHeader() {
   const [isFixedHeader, setIsFixedHeader] = useState(false)
   const { isAuthenticated, setIsAuthenticated, userProfile, setUserProfile } = useContext(AppContext)
   const HEADER_HEIGHT = 180
-  
 
   useEffect(() => {
     window.scrollY > HEADER_HEIGHT ? setIsFixedHeader(true) : setIsFixedHeader(false)
@@ -42,6 +43,13 @@ export default function MainHeader() {
       setUserProfile(null)
     }
   })
+
+  const { data: purchasesInCartData } = useQuery({
+    queryKey: ['purchases', { status: purchasesStatus.inCart }],
+    queryFn: () => purchaseApi.getPurchases({ status: purchasesStatus.inCart })
+  })
+
+  const purchasesInCart = purchasesInCartData?.data.data
 
   const handleLogoutAccount = () => {
     logoutMutation.mutate()
@@ -84,28 +92,51 @@ export default function MainHeader() {
                     </Link>
                   </div>
                   <div className='py-2'>
-                    {Array(5)
-                      .fill(0)
-                      .map((_, index) => (
-                        <Link to={'/'} key={index} className='flex gap-3 px-3 py-2'>
-                          <div className='h-10 w-10 flex-shrink-0'>
-                            <img
-                              src='https://api-ecom.duthanhduoc.com/images/1c323bdd-c0ef-4538-b09d-34c1a4478baa.jpg'
-                              alt='productImage'
-                            />
-                          </div>
-                          <div className='flex flex-grow items-center'>
-                            <span className='text-12 line-clamp-2'>
-                              DIEN THOAI VSMART ACTIVE 3 6GB/64GB - HANG CHINH HANG
+                    {purchasesInCart?.length ? (
+                      <>
+                        {purchasesInCart.slice(0, MAX_PRODUCT_PURCHASE_IN_CART).map((productPurchase) => (
+                          <Link
+                            to={`${path.home}${generateProductSlug({
+                              name: productPurchase.product.name,
+                              id: productPurchase.product._id
+                            })}`}
+                            key={productPurchase._id}
+                            className='flex gap-3 px-3 py-2'
+                          >
+                            <div className='h-10 w-10 flex-shrink-0'>
+                              <img src={productPurchase.product.image} alt={productPurchase.product.name} />
+                            </div>
+                            <div className='flex flex-grow items-center'>
+                              <span className='text-12 line-clamp-2'>{productPurchase.product.name}</span>
+                            </div>
+                            <div className='flex-shrink-0 pt-[1px]'>
+                              <span className='text-color-secondary'>
+                                <strong>{formatCurrency(productPurchase.product.price)} VND</strong>
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                        {purchasesInCart?.length > MAX_PRODUCT_PURCHASE_IN_CART && (
+                          <div className='py-2 text-center'>
+                            <span className='mr-1'>
+                              {purchasesInCart?.length > MAX_PRODUCT_PURCHASE_IN_CART &&
+                                purchasesInCart?.length - MAX_PRODUCT_PURCHASE_IN_CART}{' '}
+                              more left.
                             </span>
+                            <Link to={'/cart'} className='text-color-primary hover:underline'>
+                              View all
+                            </Link>
                           </div>
-                          <div className='flex-shrink-0 pt-[1px]'>
-                            <span className='text-color-secondary'>
-                              <strong>125$</strong>
-                            </span>
-                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className='py-5 text-center text-color-text-light'>
+                        No Products in Cart!{' '}
+                        <Link className='text-color-primary' to={path.home}>
+                          Go to shop now!
                         </Link>
-                      ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               }
@@ -115,7 +146,7 @@ export default function MainHeader() {
               </button>
               <div className='flex flex-col items-center'>
                 <span>Your cart:</span>
-                <span className='text-color-text-gray-light'>0 items - $ 0.00</span>
+                <span className='text-color-text-gray-light'>{purchasesInCart?.length} items - $ 0.00</span>
               </div>
             </Popover>
             <Popover
