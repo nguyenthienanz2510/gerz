@@ -5,8 +5,8 @@ import { omit } from 'lodash'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import path from 'src/constant/path'
 import { sortBy, order as orderConstant } from 'src/constant/product'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { ProductListConfig } from 'src/types/product.type'
-import { QueryConfig } from '../../HomePage'
 
 interface PaginationProps {
   queryConfig: QueryConfig

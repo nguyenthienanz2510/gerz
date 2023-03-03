@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { createSearchParams, Link } from 'react-router-dom'
 import path from 'src/constant/path'
-import { QueryConfig } from 'src/pages/HomePage/HomePage'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
 
 interface PaginationProps {
   queryConfig: QueryConfig
