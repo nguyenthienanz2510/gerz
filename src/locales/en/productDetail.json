@@ -1,8 +1,4 @@
 {
-  "product detail": "Product Detail",
-  "you may also like": "You may also like",
   "sold": "Sold",
-  "in stock": "In Stock",
-  "add to cart": "Add to cart",
-  "buy now": "Buy now"
+  "inStock": "In stock"
 }

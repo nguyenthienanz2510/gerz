@@ -64,7 +64,7 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
     <div className='space-y-5 rounded border border-color-border-primary-dark p-5 dark:border-none dark:bg-color-bg-dark-primary'>
       <div>
         <h4 className='mb-3 border-b border-color-border-primary-dark pb-3 font-semibold uppercase dark:border-color-border-primary-light'>
-          {t('aside filter.all categories')}
+          {t('home:asideFilter.allCategories')}
         </h4>
         <ul className='space-y-1 pl-5'>
           {categories.map((categoryItem) => {
@@ -97,7 +97,7 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
       </div>
       <div>
         <h4 className='mb-3 border-b border-color-border-primary-dark pb-3 font-semibold uppercase dark:border-color-border-primary-light'>
-          {t('aside filter.filters')}
+          {t('home:asideFilter.filters')}
         </h4>
         <div>
           <h5 className='mb-3 font-semibold'>Price Range</h5>

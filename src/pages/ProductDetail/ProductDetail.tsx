@@ -206,7 +206,7 @@ export default function ProductDetail() {
                 max={productDetail.quantity}
               />
               <span>
-                {productDetail.quantity} {t('product_detail:in stock')}
+                {productDetail.quantity} {t('product_detail:inStock')}
               </span>
             </div>
             <div className='flex gap-2'>
