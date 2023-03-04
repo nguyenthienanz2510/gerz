@@ -4,6 +4,7 @@ import produce from 'immer'
 import { keyBy } from 'lodash'
 import React, { useEffect } from 'react'
 import { useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import purchaseApi from 'src/apis/purchase.api'
@@ -139,6 +140,10 @@ export default function Cart() {
 
   return (
     <div>
+      <Helmet>
+        <title>Cart | Gerz E-Commerce</title>
+        <meta name='description' content='Cart | Gerz E-Commerce' />
+      </Helmet>
       <div className='overflow-auto'>
         <div className='min-w-[1000px]'>
           <div className='mb-2 grid grid-cols-12 gap-x-4 border border-color-border-primary-dark p-5 text-center font-semibold shadow-sm dark:border-none dark:bg-color-bg-dark-primary'>

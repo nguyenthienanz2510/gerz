@@ -11,6 +11,7 @@ import { AppContext } from 'src/context/app.context'
 import Button from 'src/components/Button'
 import path from 'src/constant/path'
 import authApi from 'src/apis/auth.api'
+import { Helmet } from 'react-helmet-async'
 
 type FormData = Pick<Schema, 'email' | 'password'>
 
@@ -70,6 +71,10 @@ export default function Register() {
 
   return (
     <div className='w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 md:mt-0 xl:p-0'>
+      <Helmet>
+        <title>Sign in | Gerz E-Commerce</title>
+        <meta name='description' content='Sign in to your account' />
+      </Helmet>
       <div className='space-y-4 p-6 sm:p-8 md:space-y-5'>
         <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl'>
           Sign in to your account

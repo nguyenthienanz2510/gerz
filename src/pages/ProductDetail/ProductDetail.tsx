@@ -14,6 +14,8 @@ import purchaseApi from 'src/apis/purchase.api'
 import { purchasesStatus } from 'src/constant/purchasse'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet-async'
+import { convert } from 'html-to-text'
 
 export default function ProductDetail() {
   const { productSlug } = useParams()
@@ -107,6 +109,17 @@ export default function ProductDetail() {
   if (!productDetail) return null
   return (
     <div>
+      <Helmet>
+        <title>{productDetail.name}</title>
+        <meta
+          name='description'
+          content={convert(productDetail.description, {
+            limits: {
+              maxInputLength: 150
+            }
+          })}
+        />
+      </Helmet>
       <div className='container mx-auto'>
         <div className='grid grid-cols-12 gap-y-7 sm:gap-10'>
           <div className='col-span-12 sm:col-span-5'>
