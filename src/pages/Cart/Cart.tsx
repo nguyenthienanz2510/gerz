@@ -215,18 +215,22 @@ export default function Cart() {
                         max={productPurchase.product.quantity}
                         disabled={productPurchase.disable}
                         onIncrease={(value) => {
-                          handlePurchaseQuantity(index, value, value <= productPurchase.product.quantity)
+                          handlePurchaseQuantity(
+                            index,
+                            value,
+                            productPurchase.buy_count < productPurchase.product.quantity
+                          )
                         }}
                         onDecrease={(value) => {
-                          handlePurchaseQuantity(index, value, value >= 1)
+                          handlePurchaseQuantity(index, value, productPurchase.buy_count > 1)
                         }}
                         onChangeInputNumber={handleChangeInputPurchaseQuantity(index)}
                         onFocusOut={(value) => {
                           handlePurchaseQuantity(
                             index,
                             value,
-                            value >= 1 &&
-                              value <= productPurchase.product.quantity &&
+                            productPurchase.buy_count >= 1 &&
+                              productPurchase.buy_count <= productPurchase.product.quantity &&
                               value !== (purchasesInCart as Purchase[])[index].buy_count
                           )
                         }}
