@@ -13,11 +13,13 @@ import QuantityController from 'src/components/QuantityController'
 import purchaseApi from 'src/apis/purchase.api'
 import { purchasesStatus } from 'src/constant/purchasse'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
 
 export default function ProductDetail() {
   const { productSlug } = useParams()
   const id = getIdFromProductSlug(productSlug as string)
   const queryClient = useQueryClient()
+  const { t } = useTranslation(['product_detail'])
   const { data } = useQuery({
     queryKey: ['product', id],
     queryFn: () => productApi.getProductDetail(id as string)
@@ -167,7 +169,7 @@ export default function ProductDetail() {
                 <span className='text-16 font-semibold text-color-primary underline'>
                   {formatNumberToSocialStyle(productDetail.sold)}
                 </span>
-                <span className='font-medium text-color-primary'>Sold</span>
+                <span className='font-medium text-color-primary'>{t('product_detail:sold')}</span>
               </div>
             </div>
             <div className='flex flex-wrap items-center gap-x-5'>
@@ -190,7 +192,9 @@ export default function ProductDetail() {
                 value={buyCount}
                 max={productDetail.quantity}
               />
-              <span>{productDetail.quantity} In Stock</span>
+              <span>
+                {productDetail.quantity} {t('product_detail:in stock')}
+              </span>
             </div>
             <div className='flex gap-2'>
               <button

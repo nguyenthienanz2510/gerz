@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import classNames from 'classnames'
 import { omit } from 'lodash'
 import { Controller, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import Button from 'src/components/Button'
 import InputNumber from 'src/components/Form/InputNumber'
@@ -26,6 +27,7 @@ const priceSchema = schema.pick(['price_min', 'price_max'])
 export default function AsideFilter({ categories, queryConfig }: AsideFilterProps) {
   const { category } = queryConfig
   const navigate = useNavigate()
+  const { t } = useTranslation(['home'])
   const {
     control,
     handleSubmit,
@@ -61,8 +63,8 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
   return (
     <div className='space-y-5 rounded border border-color-border-primary-dark p-5 dark:border-none dark:bg-color-bg-dark-primary'>
       <div>
-        <h4 className='mb-3 border-b border-color-border-primary-dark pb-3 font-semibold dark:border-color-border-primary-light'>
-          ALL CATEGORIES
+        <h4 className='mb-3 border-b border-color-border-primary-dark pb-3 font-semibold uppercase dark:border-color-border-primary-light'>
+          {t('aside filter.all categories')}
         </h4>
         <ul className='space-y-1 pl-5'>
           {categories.map((categoryItem) => {
@@ -94,8 +96,8 @@ export default function AsideFilter({ categories, queryConfig }: AsideFilterProp
         </ul>
       </div>
       <div>
-        <h4 className='mb-3 border-b border-color-border-primary-dark pb-3 font-semibold dark:border-color-border-primary-light'>
-          FILTERS
+        <h4 className='mb-3 border-b border-color-border-primary-dark pb-3 font-semibold uppercase dark:border-color-border-primary-light'>
+          {t('aside filter.filters')}
         </h4>
         <div>
           <h5 className='mb-3 font-semibold'>Price Range</h5>

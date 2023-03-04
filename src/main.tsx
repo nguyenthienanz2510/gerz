@@ -7,6 +7,7 @@ import App from './App'
 import './assets/style/global.css'
 import './assets/style/index.scss'
 import { AppProvider } from './context/app.context'
+import 'src/i18n/i18n'
 
 const queryClient = new QueryClient({
   defaultOptions: {
