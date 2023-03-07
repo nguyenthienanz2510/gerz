@@ -5,6 +5,7 @@ import path from 'src/constant/path'
 import { AuthResponse } from 'src/types/auth.type'
 import {
   clearAccessTokenFromLocalStorage,
+  clearLocalStorage,
   clearUserProfileFromLocalStorage,
   getAccessTokenFromLocalStorage,
   setAccessTokenToLocalStorage,
@@ -45,8 +46,7 @@ class Http {
           setUserProfileToLocalStorage(data.data.user)
         } else if (url === path.logout) {
           this.accessToken = ''
-          clearAccessTokenFromLocalStorage()
-          clearUserProfileFromLocalStorage()
+          clearLocalStorage()
         }
         return response
       },
@@ -56,6 +56,9 @@ class Http {
           const data: any | undefined = error.response?.data
           const message = data.message || error.message
           toast.error(message)
+        }
+        if (error.response?.status == HttpStatusCode.Unauthorized) {
+          clearLocalStorage()
         }
         return Promise.reject(error)
       }
