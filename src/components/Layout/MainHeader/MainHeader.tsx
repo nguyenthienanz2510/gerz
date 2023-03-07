@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import authApi from 'src/apis/auth.api'
 import purchaseApi from 'src/apis/purchase.api'
@@ -27,7 +27,7 @@ const MAX_PRODUCT_PURCHASE_IN_CART = 5
 export default function MainHeader() {
   const queryClient = useQueryClient()
   const [isFixedHeader, setIsFixedHeader] = useState(false)
-  const { isAuthenticated, setIsAuthenticated, userProfile, setUserProfile } = useContext(AppContext)
+  const { isAuthenticated, setIsAuthenticated, userProfile, setUserProfile, extendedPurchases } = useContext(AppContext)
   const HEADER_HEIGHT = 180
 
   useEffect(() => {
@@ -54,6 +54,11 @@ export default function MainHeader() {
 
   const purchasesInCart = purchasesInCartData?.data.data
 
+  const totalPurchasesInCart = useMemo(() => {
+    if (!purchasesInCart) return null
+    return purchasesInCart.reduce((result, current) => result + current.product.price * current.buy_count, 0)
+  }, [purchasesInCart])
+
   const handleLogoutAccount = () => {
     logoutMutation.mutate()
   }
@@ -78,7 +83,7 @@ export default function MainHeader() {
               <div className='flex flex-col items-center'>
                 <a href='tel:0363016630'>0363-016-630</a>
                 <a href='mailto:support@gerz.com' className='text-color-text-gray-light'>
-                  <span>anzgermany@gmail.com</span>
+                  <span>support@gerz.com</span>
                 </a>
               </div>
             </div>
@@ -150,7 +155,9 @@ export default function MainHeader() {
                 </button>
                 <div className='flex flex-col items-center'>
                   <span>Your cart:</span>
-                  <span className='text-color-text-gray-light'>{purchasesInCart?.length} items - $ 0.00</span>
+                  <span className='text-color-text-gray-light'>
+                    {purchasesInCart?.length} items - {formatCurrency(totalPurchasesInCart || 0)} VND
+                  </span>
                 </div>
               </Link>
             </Popover>

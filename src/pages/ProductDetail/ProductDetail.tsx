@@ -2,7 +2,7 @@ import { faChevronLeft, faChevronRight, faMinus, faPlus } from '@fortawesome/fre
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
 import ProductRating from 'src/components/ProductRating'
 import { formatCurrency, formatNumberToSocialStyle, getIdFromProductSlug, rateSale } from 'src/utils/utils'
@@ -16,8 +16,10 @@ import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 import { Helmet } from 'react-helmet-async'
 import { convert } from 'html-to-text'
+import path from 'src/constant/path'
 
 export default function ProductDetail() {
+  const navigate = useNavigate()
   const { productSlug } = useParams()
   const id = getIdFromProductSlug(productSlug as string)
   const queryClient = useQueryClient()
@@ -104,6 +106,16 @@ export default function ProductDetail() {
         }
       }
     )
+  }
+
+  const buyNow = async () => {
+    const res = await addToCartMutation.mutateAsync({ buy_count: buyCount, product_id: productDetail?._id as string })
+    const purchase = res.data.data
+    navigate(path.cart, {
+      state: {
+        purchaseId: purchase._id
+      }
+    })
   }
 
   if (!productDetail) return null
@@ -216,7 +228,10 @@ export default function ProductDetail() {
               >
                 Add to cart
               </button>
-              <button className='rounded border border-color-primary px-6 py-3 text-16 font-semibold text-color-primary hover:border-color-primary-active hover:bg-color-primary-active hover:text-color-text-light'>
+              <button
+                onClick={buyNow}
+                className='rounded border border-color-primary px-6 py-3 text-16 font-semibold text-color-primary hover:border-color-primary-active hover:bg-color-primary-active hover:text-color-text-light'
+              >
                 Buy now
               </button>
             </div>

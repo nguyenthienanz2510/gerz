@@ -12,7 +12,7 @@ export default function Product({ product }: ProductProps) {
   return (
     <Link to={`${path.home}${generateProductSlug({ name: product.name, id: product._id })}`}>
       <div className='product__cart rounded border border-color-border-primary-dark bg-color-white transition-all hover:border-color-primary dark:border-color-border-primary-light dark:bg-color-bg-dark-primary dark:hover:border-color-primary'>
-        <div className='relative w-full overflow-hidden pt-[100%]'>
+        <div className='relative w-full overflow-hidden rounded-t pt-[100%]'>
           <img
             src={product.image}
             alt={product.name}
