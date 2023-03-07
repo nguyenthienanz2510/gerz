@@ -2,7 +2,7 @@ import { faChevronLeft, faChevronRight, faMinus, faPlus } from '@fortawesome/fre
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import productApi from 'src/apis/product.api'
 import ProductRating from 'src/components/ProductRating'
 import { formatCurrency, formatNumberToSocialStyle, getIdFromProductSlug, rateSale } from 'src/utils/utils'
@@ -13,11 +13,17 @@ import QuantityController from 'src/components/QuantityController'
 import purchaseApi from 'src/apis/purchase.api'
 import { purchasesStatus } from 'src/constant/purchasse'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
+import { Helmet } from 'react-helmet-async'
+import { convert } from 'html-to-text'
+import path from 'src/constant/path'
 
 export default function ProductDetail() {
+  const navigate = useNavigate()
   const { productSlug } = useParams()
   const id = getIdFromProductSlug(productSlug as string)
   const queryClient = useQueryClient()
+  const { t } = useTranslation(['product_detail'])
   const { data } = useQuery({
     queryKey: ['product', id],
     queryFn: () => productApi.getProductDetail(id as string)
@@ -102,9 +108,30 @@ export default function ProductDetail() {
     )
   }
 
+  const buyNow = async () => {
+    const res = await addToCartMutation.mutateAsync({ buy_count: buyCount, product_id: productDetail?._id as string })
+    const purchase = res.data.data
+    navigate(path.cart, {
+      state: {
+        purchaseId: purchase._id
+      }
+    })
+  }
+
   if (!productDetail) return null
   return (
     <div>
+      <Helmet>
+        <title>{productDetail.name}</title>
+        <meta
+          name='description'
+          content={convert(productDetail.description, {
+            limits: {
+              maxInputLength: 150
+            }
+          })}
+        />
+      </Helmet>
       <div className='container mx-auto'>
         <div className='grid grid-cols-12 gap-y-7 sm:gap-10'>
           <div className='col-span-12 sm:col-span-5'>
@@ -167,7 +194,7 @@ export default function ProductDetail() {
                 <span className='text-16 font-semibold text-color-primary underline'>
                   {formatNumberToSocialStyle(productDetail.sold)}
                 </span>
-                <span className='font-medium text-color-primary'>Sold</span>
+                <span className='font-medium text-color-primary'>{t('product_detail:sold')}</span>
               </div>
             </div>
             <div className='flex flex-wrap items-center gap-x-5'>
@@ -190,7 +217,9 @@ export default function ProductDetail() {
                 value={buyCount}
                 max={productDetail.quantity}
               />
-              <span>{productDetail.quantity} In Stock</span>
+              <span>
+                {productDetail.quantity} {t('product_detail:inStock')}
+              </span>
             </div>
             <div className='flex gap-2'>
               <button
@@ -199,7 +228,10 @@ export default function ProductDetail() {
               >
                 Add to cart
               </button>
-              <button className='rounded border border-color-primary px-6 py-3 text-16 font-semibold text-color-primary hover:border-color-primary-active hover:bg-color-primary-active hover:text-color-text-light'>
+              <button
+                onClick={buyNow}
+                className='rounded border border-color-primary px-6 py-3 text-16 font-semibold text-color-primary hover:border-color-primary-active hover:bg-color-primary-active hover:text-color-text-light'
+              >
                 Buy now
               </button>
             </div>

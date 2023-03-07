@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { Helmet } from 'react-helmet-async'
 import categoryApi from 'src/apis/category.api'
 import productApi from 'src/apis/product.api'
 import Pagination from 'src/components/Pagination'
@@ -31,6 +32,10 @@ export default function HomePage() {
     <>
       {productsData && (
         <div className='grid grid-cols-1 gap-5 md:grid-cols-12'>
+          <Helmet>
+            <title>Home | Gerz E-Commerce</title>
+            <meta name='description' content='Home | Gerz E-Commerce' />
+          </Helmet>
           <div className='md:col-span-3'>
             <AsideFilter queryConfig={queryConfig} categories={categoriesData?.data.data || []} />
           </div>
