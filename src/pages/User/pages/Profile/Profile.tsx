@@ -1,11 +1,59 @@
-import React from 'react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useQuery } from '@tanstack/react-query'
+import React, { useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import userApi from 'src/apis/user.api'
 import Input from 'src/components/Form/Input'
+import InputNumber from 'src/components/Form/InputNumber'
+import { userSchema, UserSchema } from 'src/utils/rules'
+
+type FormData = Pick<UserSchema, 'name' | 'address' | 'phone' | 'date_of_birth' | 'avatar'>
+
+const profileSchema = userSchema.pick(['name', 'address', 'phone', 'date_of_birth', 'avatar'])
 
 export default function Profile() {
+  const {
+    register,
+    control,
+    handleSubmit,
+    getValues,
+    setValue,
+    setError,
+    formState: { errors }
+  } = useForm<FormData>({
+    defaultValues: {
+      name: '',
+      phone: '',
+      address: '',
+      avatar: '',
+      date_of_birth: new Date(2000, 0, 1)
+    },
+    resolver: yupResolver(profileSchema)
+  })
+
+  const { data: profileData, error } = useQuery({
+    queryKey: ['profile'],
+    queryFn: userApi.getProfile
+  })
+
+  const profile = profileData?.data.data
+
+  useEffect(() => {
+    if (profile) {
+      setValue('name', profile.name)
+      setValue('phone', profile.phone)
+      setValue('avatar', profile.avatar)
+      setValue('address', profile.address)
+      setValue('date_of_birth', profile.date_of_birth ? new Date(profile.date_of_birth) : new Date())
+    }
+  }, [profile, setValue])
+
+  console.log(profile)
+
   return (
     <div>
       <h1 className='text-28 font-semibold'>My Profile</h1>
-      <div className='mt-10 flex flex-col gap-10 sm:flex-row'>
+      <form className='mt-10 flex flex-col gap-10 sm:flex-row'>
         <div className=''>
           <div className='flex flex-col items-center justify-center gap-4'>
             <div className='h-40 w-40 overflow-hidden rounded-full border'>
@@ -18,8 +66,11 @@ export default function Profile() {
             </div>
             <div className='flex flex-col'>
               <input type='file' className='hidden' accept='.jpg, .jpeg, .png' />
-              <button className='rounded border px-5 py-2 transition-all hover:border-color-primary hover:text-color-primary'>
-                Change image
+              <button
+                type='button'
+                className='rounded border px-5 py-2 transition-all hover:border-color-primary hover:text-color-primary'
+              >
+                Chose image
               </button>
               <span className='mt-4 text-center'>
                 Accept file types: <br className='hidden sm:block' />
@@ -29,17 +80,17 @@ export default function Profile() {
           </div>
         </div>
         <div className='flex-1'>
-          <form className='space-y-6'>
+          <div className='space-y-6'>
             <div className='grid grid-cols-12'>
               <div className='col-span-4'>Email:</div>
-              <div className='col-span-8'>NguyenThienAn@gmail.com</div>
+              <div className='col-span-8'>{profile?.email}</div>
             </div>
             <div className='grid grid-cols-12'>
               <div className='col-span-4'>
                 <span className='leading-10'>Name:</span>
               </div>
               <div className='col-span-8'>
-                <Input />
+                <Input register={register} name='name' placeholder='Your name' errorMessage={errors.name?.message} />
               </div>
             </div>
             <div className='grid grid-cols-12'>
@@ -47,7 +98,23 @@ export default function Profile() {
                 <span className='leading-10'>Phone Number:</span>
               </div>
               <div className='col-span-8'>
-                <Input />
+                <Controller
+                  control={control}
+                  name='phone'
+                  render={({ field }) => {
+                    return (
+                      <InputNumber
+                        classNameError='mt-0'
+                        placeholder='Phone number'
+                        errorMessage={errors.phone?.message}
+                        {...field}
+                        onchange={(event) => {
+                          field.onChange(event)
+                        }}
+                      />
+                    )
+                  }}
+                />
               </div>
             </div>
             <div className='grid grid-cols-12'>
@@ -55,7 +122,12 @@ export default function Profile() {
                 <span className='leading-10'>Address:</span>
               </div>
               <div className='col-span-8'>
-                <Input />
+                <Input
+                  register={register}
+                  name='address'
+                  placeholder='Address'
+                  errorMessage={errors.address?.message}
+                />
               </div>
             </div>
             <div className='grid grid-cols-12'>
@@ -91,9 +163,15 @@ export default function Profile() {
                 </div>
               </div>
             </div>
-          </form>
+            <button
+              type='submit'
+              className='rounded border border-color-primary px-5 py-2.5 text-color-primary hover:border-color-primary-active hover:bg-color-primary-active hover:text-color-text-light'
+            >
+              Save change
+            </button>
+          </div>
         </div>
-      </div>
+      </form>
     </div>
   )
 }
