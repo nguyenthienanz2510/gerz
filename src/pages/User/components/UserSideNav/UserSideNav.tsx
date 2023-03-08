@@ -6,15 +6,19 @@ import path from 'src/constant/path'
 import { AppContext } from 'src/context/app.context'
 
 export default function UserSideNav() {
-  const navigate = useNavigate()
   const { userProfile } = useContext(AppContext)
   return (
     <div>
       <div>
         <Link to={path.profile}>
           <div className='flex flex-wrap items-start justify-start gap-3'>
-            <div className='h-10 w-10'>
-              <img src='/vite.svg' alt='Avatar' title='Avatar' width='100%' />
+            <div className='overflow-hidden rounded-full border'>
+              <img
+                src='/images/avatar-the-boss-baby.png'
+                alt='Avatar'
+                title='Avatar'
+                className='h-20 w-20 object-cover'
+              />
             </div>
             <span className='font-semibold capitalize'>{userProfile?.email}</span>
           </div>
