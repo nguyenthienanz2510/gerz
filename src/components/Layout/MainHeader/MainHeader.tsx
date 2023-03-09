@@ -167,7 +167,7 @@ export default function MainHeader() {
                 <div className='flex flex-col border border-color-border-primary-light bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary-light'>
                   <div className='flex flex-col'>
                     <span className='border-b border-color-black py-4 px-5'>
-                      Hello! <span className='text-color-primary'>{userProfile?.email || 'Username'}</span>
+                      Hello! <span className='text-color-primary'>{userProfile?.name || userProfile?.email}</span>
                     </span>
                   </div>
                   <div className='flex flex-col'>
@@ -177,7 +177,7 @@ export default function MainHeader() {
                     >
                       Profile
                     </Link>
-                    <span className='flex justify-between border-b border-color-black py-2 px-5'>
+                    <span className='flex justify-between gap-x-10 border-b border-color-black py-2 px-5'>
                       <span>Language</span>
                       <SelectLanguage />
                     </span>
@@ -204,7 +204,7 @@ export default function MainHeader() {
                 </button>
                 <div className='flex flex-col items-center'>
                   <span>Profile</span>
-                  <span className='text-color-text-gray-light'>{userProfile?.email || 'Username'}</span>
+                  <span className='text-color-text-gray-light'>{userProfile?.name || userProfile?.email}</span>
                 </div>
               </Link>
             </Popover>

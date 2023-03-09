@@ -88,7 +88,7 @@ export default function MainHeaderMobile() {
                 <div className='border-b border-color-black py-3 px-3'>
                   <div className='container'>
                     <span>
-                      Hello! <span className='text-color-primary'>{userProfile?.email || 'Username'}</span>
+                      Hello! <span className='text-color-primary'>{userProfile?.name || userProfile?.email}</span>
                     </span>
                   </div>
                 </div>

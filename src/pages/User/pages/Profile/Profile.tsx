@@ -1,17 +1,23 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useQuery } from '@tanstack/react-query'
-import React, { useEffect } from 'react'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { useContext, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import userApi from 'src/apis/user.api'
 import Input from 'src/components/Form/Input'
 import InputNumber from 'src/components/Form/InputNumber'
+import { AppContext } from 'src/context/app.context'
+import { setUserProfileToLocalStorage } from 'src/utils/auth'
 import { userSchema, UserSchema } from 'src/utils/rules'
+import DateSelect from '../../components/DateSelect'
 
 type FormData = Pick<UserSchema, 'name' | 'address' | 'phone' | 'date_of_birth' | 'avatar'>
 
 const profileSchema = userSchema.pick(['name', 'address', 'phone', 'date_of_birth', 'avatar'])
 
 export default function Profile() {
+  const { setUserProfile, userProfile } = useContext(AppContext)
+
   const {
     register,
     control,
@@ -26,17 +32,24 @@ export default function Profile() {
       phone: '',
       address: '',
       avatar: '',
-      date_of_birth: new Date(2000, 0, 1)
+      date_of_birth: new Date(1970, 0, 1)
     },
     resolver: yupResolver(profileSchema)
   })
 
-  const { data: profileData, error } = useQuery({
+  const {
+    data: profileData,
+    error,
+    refetch
+  } = useQuery({
     queryKey: ['profile'],
     queryFn: userApi.getProfile
   })
 
   const profile = profileData?.data.data
+  console.log(profile)
+
+  const updateProfileMutation = useMutation(userApi.updateProfile)
 
   useEffect(() => {
     if (profile) {
@@ -48,17 +61,23 @@ export default function Profile() {
     }
   }, [profile, setValue])
 
-  console.log(profile)
+  const onSubmit = handleSubmit(async (data) => {
+    const res = await updateProfileMutation.mutateAsync({ ...data, date_of_birth: data.date_of_birth?.toISOString() })
+    refetch()
+    setUserProfile(res.data.data)
+    setUserProfileToLocalStorage(res.data.data)
+    toast(res.data.message)
+  })
 
   return (
     <div>
       <h1 className='text-28 font-semibold'>My Profile</h1>
-      <form className='mt-10 flex flex-col gap-10 sm:flex-row'>
+      <form className='mt-10 flex flex-col gap-10 sm:flex-row' onSubmit={onSubmit}>
         <div className=''>
           <div className='flex flex-col items-center justify-center gap-4'>
             <div className='h-40 w-40 overflow-hidden rounded-full border'>
               <img
-                src='/images/avatar-the-boss-baby.png'
+                src={userProfile?.avatar || '/images/avatar-the-boss-baby.png'}
                 alt='Avatar'
                 title='Avatar'
                 className='h-40 w-40 object-cover'
@@ -104,9 +123,9 @@ export default function Profile() {
                   render={({ field }) => {
                     return (
                       <InputNumber
-                        classNameError='mt-0'
                         placeholder='Phone number'
                         errorMessage={errors.phone?.message}
+                        showError
                         {...field}
                         onchange={(event) => {
                           field.onChange(event)
@@ -135,32 +154,17 @@ export default function Profile() {
                 <span className='leading-10'>Birthday:</span>
               </div>
               <div className='col-span-8'>
-                <div className='grid grid-cols-12 gap-2 sm:gap-4'>
-                  <select
-                    className='focus:border-color  col-span-4 block w-full rounded-lg 
-                  border border-gray-300 bg-gray-50 p-2.5 
-                  text-color-text-dark ring-color-primary focus:border-color-primary 
-                  dark:border-gray-600 dark:bg-gray-700 dark:text-color-text-light dark:placeholder-gray-300 dark:focus:border-color-primary dark:focus:ring-color-primary  sm:text-sm'
-                  >
-                    <option value=''>Date</option>
-                  </select>
-                  <select
-                    className='focus:border-color  col-span-4 block w-full rounded-lg 
-                  border border-gray-300 bg-gray-50 p-2.5 
-                  text-color-text-dark ring-color-primary focus:border-color-primary 
-                  dark:border-gray-600 dark:bg-gray-700 dark:text-color-text-light dark:placeholder-gray-300 dark:focus:border-color-primary dark:focus:ring-color-primary  sm:text-sm'
-                  >
-                    <option value=''>Month</option>
-                  </select>
-                  <select
-                    className='focus:border-color  col-span-4 block w-full rounded-lg 
-                  border border-gray-300 bg-gray-50 p-2.5 
-                  text-color-text-dark ring-color-primary focus:border-color-primary 
-                  dark:border-gray-600 dark:bg-gray-700 dark:text-color-text-light dark:placeholder-gray-300 dark:focus:border-color-primary dark:focus:ring-color-primary  sm:text-sm'
-                  >
-                    <option value=''>Year</option>
-                  </select>
-                </div>
+                <Controller
+                  control={control}
+                  name='date_of_birth'
+                  render={({ field }) => (
+                    <DateSelect
+                      errorMessage={errors.date_of_birth?.message}
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  )}
+                />
               </div>
             </div>
             <button

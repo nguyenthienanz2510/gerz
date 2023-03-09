@@ -70,7 +70,7 @@ export default function Register() {
   })
 
   return (
-    <div className='w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 md:mt-0 xl:p-0'>
+    <div className='w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-color-bg-dark-primary md:mt-0 xl:p-0'>
       <Helmet>
         <title>Sign in | Gerz E-Commerce</title>
         <meta name='description' content='Sign in to your account' />
@@ -80,7 +80,7 @@ export default function Register() {
           Sign in to your account
         </h1>
         <p className='text-color-text-gray-dark dark:text-color-text-gray-light'>Already have an account, login now!</p>
-        <form className='space-y-4 md:space-y-5' onSubmit={handleOnSubmit} noValidate>
+        <form className='space-y-5 md:space-y-6' onSubmit={handleOnSubmit} noValidate>
           <Input
             name='email'
             type='email'

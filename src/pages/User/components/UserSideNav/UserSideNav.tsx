@@ -11,16 +11,16 @@ export default function UserSideNav() {
     <div>
       <div>
         <Link to={path.profile}>
-          <div className='flex flex-wrap items-start justify-start gap-3'>
-            <div className='overflow-hidden rounded-full border'>
+          <div className='flex flex-col items-center justify-center gap-3 sm:items-start'>
+            <div className='inline-block overflow-hidden rounded-full border'>
               <img
-                src='/images/avatar-the-boss-baby.png'
+                src={userProfile?.avatar || '/images/avatar-the-boss-baby.png'}
                 alt='Avatar'
                 title='Avatar'
                 className='h-20 w-20 object-cover'
               />
             </div>
-            <span className='font-semibold capitalize'>{userProfile?.email}</span>
+            <span className='font-semibold capitalize'>{userProfile?.name || userProfile?.email}</span>
           </div>
         </Link>
       </div>

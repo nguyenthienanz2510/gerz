@@ -80,7 +80,7 @@ export default function Register() {
           Sign Up
         </h1>
         <p className='text-color-text-gray-dark dark:text-color-text-gray-light'>Let’s create your account</p>
-        <form className='space-y-4 md:space-y-5' onSubmit={handleOnSubmit} noValidate>
+        <form className='space-y-5 md:space-y-6' onSubmit={handleOnSubmit} noValidate>
           <Input
             name='email'
             type='email'
