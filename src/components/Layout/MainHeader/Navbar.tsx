@@ -1,21 +1,22 @@
 import { NavLink } from 'react-router-dom'
+import path from 'src/constant/path'
 
 const dataNavbar = [
   {
     name: 'Home',
-    slug: '/'
-  },
-  {
-    name: 'Shop',
-    slug: '/shop'
+    slug: path.home
   },
   {
     name: 'About',
-    slug: '/about'
+    slug: path.about
   },
   {
     name: 'Contact',
-    slug: '/contact'
+    slug: path.contact
+  },
+  {
+    name: 'FAQ',
+    slug: path.faq
   }
 ]
 
