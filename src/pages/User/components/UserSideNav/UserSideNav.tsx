@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import path from 'src/constant/path'
 import { AppContext } from 'src/context/app.context'
+import { getAvatarURL } from 'src/utils/utils'
 
 export default function UserSideNav() {
   const { userProfile } = useContext(AppContext)
@@ -14,7 +15,7 @@ export default function UserSideNav() {
           <div className='flex flex-col items-center justify-center gap-3 sm:items-start'>
             <div className='inline-block overflow-hidden rounded-full border'>
               <img
-                src={userProfile?.avatar || '/images/avatar-the-boss-baby.png'}
+                src={getAvatarURL(userProfile?.avatar)}
                 alt='Avatar'
                 title='Avatar'
                 className='h-20 w-20 object-cover'

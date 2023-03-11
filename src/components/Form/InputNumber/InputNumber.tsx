@@ -37,7 +37,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function Inpu
   return (
     <div className={className}>
       <input className={classNameInput} {...rest} onChange={handleChange} ref={ref} />
-      {showError && <div className={classNameError}>{errorMessage}</div>}
+      {showError && errorMessage && <div className={classNameError}>{errorMessage}</div>}
     </div>
   )
 })

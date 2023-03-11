@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios'
+import config from 'src/constant/config'
 import HttpStatusCode from 'src/constant/httpStatusCode.enum'
 
 export function isAxiosError<T>(error: unknown): error is AxiosError<T> {
@@ -39,4 +40,8 @@ export function generateProductSlug({ name, id }: { name: string; id: string }) 
 export function getIdFromProductSlug(nameId: string) {
   const arr = nameId.split('-id-')
   return arr[arr.length - 1]
+}
+
+export function getAvatarURL(avatarName?: string) {
+  return avatarName ? `${config.baseUrl}images/${avatarName}` : '/images/avatar-the-boss-baby.png'
 }
