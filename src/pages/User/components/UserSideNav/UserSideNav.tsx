@@ -1,6 +1,7 @@
 import { faKey, faMoneyCheckDollar, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import path from 'src/constant/path'
 import { AppContext } from 'src/context/app.context'
@@ -8,6 +9,7 @@ import { getAvatarURL } from 'src/utils/utils'
 
 export default function UserSideNav() {
   const { userProfile } = useContext(AppContext)
+  const { t } = useTranslation(['profile'])
   return (
     <div>
       <div>
@@ -30,7 +32,7 @@ export default function UserSideNav() {
           <NavLink to={path.profile} className={({ isActive }) => (isActive ? 'text-color-primary' : undefined)}>
             <div className='flex items-center justify-start'>
               <FontAwesomeIcon icon={faUser} />
-              <span className='ml-3 capitalize'>My profile</span>
+              <span className='ml-3 capitalize'>{t('profile:myProfile')}</span>
             </div>
           </NavLink>
         </li>
@@ -38,7 +40,7 @@ export default function UserSideNav() {
           <Link to={path.historyPurchase}>
             <div className='flex items-center justify-start'>
               <FontAwesomeIcon icon={faMoneyCheckDollar} />
-              <span className='ml-3 capitalize'>History</span>
+              <span className='ml-3 capitalize'>{t('profile:history')}</span>
             </div>
           </Link>
         </li>
@@ -46,7 +48,7 @@ export default function UserSideNav() {
           <Link to={path.changePassword}>
             <div className='flex items-center justify-start'>
               <FontAwesomeIcon icon={faKey} />
-              <span className='ml-3 capitalize'>Change password</span>
+              <span className='ml-3 capitalize'>{t('profile:changePassword')}</span>
             </div>
           </Link>
         </li>

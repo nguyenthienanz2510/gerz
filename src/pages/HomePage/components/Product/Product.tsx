@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import ProductRating from 'src/components/ProductRating'
 import path from 'src/constant/path'
@@ -9,6 +10,7 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
+  const { t } = useTranslation(['product'])
   return (
     <Link to={`${path.home}${generateProductSlug({ name: product.name, id: product._id })}`}>
       <div className='product__cart rounded border border-color-border-primary-dark bg-color-white transition-all hover:border-color-primary dark:border-color-border-primary-light dark:bg-color-bg-dark-primary dark:hover:border-color-primary'>
@@ -36,7 +38,7 @@ export default function Product({ product }: ProductProps) {
             <ProductRating rating={product.rating} />
             <div className='text-12 text-color-text-dark dark:text-color-text-light'>
               <span className='font-semibold text-color-primary'>{formatNumberToSocialStyle(product.sold)}</span>
-              <span className='ml-1'>Sold</span>
+              <span className='ml-1'>{t('product:sold')}</span>
             </div>
           </div>
         </div>

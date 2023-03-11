@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import userApi from 'src/apis/user.api'
 import Input from 'src/components/Form/Input'
@@ -21,6 +22,7 @@ type FormDataError = Omit<FormData, 'date_of_birth'> & {
 const profileSchema = userSchema.pick(['name', 'address', 'phone', 'date_of_birth', 'avatar'])
 
 export default function Profile() {
+  const { t } = useTranslation(['profile'])
   const { setUserProfile, userProfile } = useContext(AppContext)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [file, setFile] = useState<File>()
@@ -117,7 +119,7 @@ export default function Profile() {
 
   return (
     <div>
-      <h1 className='text-28 font-semibold'>My Profile</h1>
+      <h1 className='text-28 font-semibold'>{t('profile:myProfile')}</h1>
       <form className='mt-10 flex flex-col gap-10 sm:flex-row' onSubmit={onSubmit}>
         <div className=''>
           <div className='flex flex-col items-center justify-center gap-4'>
@@ -136,10 +138,10 @@ export default function Profile() {
                 className='rounded border px-5 py-2 transition-all hover:border-color-primary hover:text-color-primary'
                 onClick={handleUpload}
               >
-                Chose image
+                {t('profile:choseImage')}
               </button>
               <span className='mt-4 text-center'>
-                Accept file types: <br className='hidden sm:block' />
+                {t('profile:acceptFileTypes')}: <br className='hidden sm:block' />
                 .jpg, .jpeg, .png
               </span>
             </div>
@@ -148,12 +150,12 @@ export default function Profile() {
         <div className='flex-1'>
           <div className='space-y-6'>
             <div className='grid grid-cols-12'>
-              <div className='col-span-4'>Email:</div>
+              <div className='col-span-4'>{t('profile:email')}:</div>
               <div className='col-span-8'>{profile?.email}</div>
             </div>
             <div className='grid grid-cols-12'>
               <div className='col-span-4'>
-                <span className='leading-10'>Name:</span>
+                <span className='leading-10'>{t('profile:name')}:</span>
               </div>
               <div className='col-span-8'>
                 <Input register={register} name='name' placeholder='Your name' errorMessage={errors.name?.message} />
@@ -161,7 +163,7 @@ export default function Profile() {
             </div>
             <div className='grid grid-cols-12'>
               <div className='col-span-4'>
-                <span className='leading-10'>Phone Number:</span>
+                <span className='leading-10'>{t('profile:phoneNumber')}:</span>
               </div>
               <div className='col-span-8'>
                 <Controller
@@ -185,7 +187,7 @@ export default function Profile() {
             </div>
             <div className='grid grid-cols-12'>
               <div className='col-span-4'>
-                <span className='leading-10'>Address:</span>
+                <span className='leading-10'>{t('profile:address')}:</span>
               </div>
               <div className='col-span-8'>
                 <Input
@@ -198,7 +200,7 @@ export default function Profile() {
             </div>
             <div className='grid grid-cols-12'>
               <div className='col-span-4'>
-                <span className='leading-10'>Birthday:</span>
+                <span className='leading-10'>{t('profile:birthday')}:</span>
               </div>
               <div className='col-span-8'>
                 <Controller
@@ -218,7 +220,7 @@ export default function Profile() {
               type='submit'
               className='rounded border border-color-primary px-5 py-2.5 text-color-primary hover:border-color-primary-active hover:bg-color-primary-active hover:text-color-text-light'
             >
-              Save change
+              {t('profile:saveChange')}
             </button>
           </div>
         </div>

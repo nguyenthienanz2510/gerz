@@ -30,7 +30,12 @@ export default function SelectLanguage() {
         </div>
       }
     >
-      <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} />
+      {currentLanguage === 'Tiếng Việt' ? (
+        <FontAwesomeIcon icon={faEarthAsia} size={'lg'} color={'#feffff'} />
+      ) : (
+        <FontAwesomeIcon icon={faGlobe} size={'lg'} color={'#feffff'} />
+      )}
+
       <span className='mx-2'>{currentLanguage}</span>
       <FontAwesomeIcon icon={faSortDown} size={'lg'} color={'#feffff'} className='-translate-y-1' />
     </Popover>

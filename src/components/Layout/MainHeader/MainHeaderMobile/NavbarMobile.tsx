@@ -1,26 +1,31 @@
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 import path from 'src/constant/path'
 
-const dataNavbar = [
-  {
-    name: 'Home',
-    slug: path.home
-  },
-  {
-    name: 'About',
-    slug: path.about
-  },
-  {
-    name: 'Contact',
-    slug: path.contact
-  },
-  {
-    name: 'FAQ',
-    slug: path.faq
-  }
-]
-
 export default function NavbarMobile() {
+  const { t } = useTranslation(['common'])
+  const dataNavbar = useMemo(
+    () => [
+      {
+        name: t('common:home'),
+        slug: path.home
+      },
+      {
+        name: t('common:about'),
+        slug: path.about
+      },
+      {
+        name: t('common:contact'),
+        slug: path.contact
+      },
+      {
+        name: t('common:faq'),
+        slug: path.faq
+      }
+    ],
+    [t]
+  )
   return (
     <div className='text-color-text-light'>
       <ul>

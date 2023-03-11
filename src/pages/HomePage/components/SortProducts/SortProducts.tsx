@@ -2,6 +2,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { omit } from 'lodash'
+import { useTranslation } from 'react-i18next'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import path from 'src/constant/path'
 import { sortBy, order as orderConstant } from 'src/constant/product'
@@ -17,6 +18,7 @@ export default function SortProducts({ queryConfig, pageSize }: PaginationProps)
   const { sort_by = sortBy.createdAt, order } = queryConfig
   const { page } = queryConfig
   const navigate = useNavigate()
+  const { t } = useTranslation(['home'])
 
   const isActiveSortBy = (sortByValue: Exclude<ProductListConfig['sort_by'], undefined>) => {
     return sort_by == sortByValue
@@ -52,7 +54,7 @@ export default function SortProducts({ queryConfig, pageSize }: PaginationProps)
   return (
     <div className='flex flex-col items-start justify-between gap-2 rounded bg-color-white py-3 dark:bg-color-bg-dark-primary dark:px-5 sm:flex-row sm:items-center'>
       <div className='flex flex-wrap items-center gap-2'>
-        Sort By:{' '}
+        {t('home:sortBy')}:{' '}
         <button
           className={classNames('h-9 rounded px-3 hover:bg-color-primary-active  dark:hover:bg-color-primary-active', {
             'bg-color-primary': isActiveSortBy(sortBy.view),
@@ -62,7 +64,7 @@ export default function SortProducts({ queryConfig, pageSize }: PaginationProps)
             handleSort(sortBy.view)
           }}
         >
-          Popular
+          {t('home:popular')}
         </button>
         <button
           className={classNames('h-9 rounded px-3 hover:bg-color-primary-active  dark:hover:bg-color-primary-active', {
@@ -73,7 +75,7 @@ export default function SortProducts({ queryConfig, pageSize }: PaginationProps)
             handleSort(sortBy.createdAt)
           }}
         >
-          Latest
+          {t('home:latest')}
         </button>
         <button
           className={classNames('h-9 rounded px-3 hover:bg-color-primary-active  dark:hover:bg-color-primary-active', {
@@ -84,7 +86,7 @@ export default function SortProducts({ queryConfig, pageSize }: PaginationProps)
             handleSort(sortBy.sold)
           }}
         >
-          Top sales
+          {t('home:topSales')}
         </button>
         <select
           value={order || ''}
@@ -97,10 +99,10 @@ export default function SortProducts({ queryConfig, pageSize }: PaginationProps)
           })}
         >
           <option value='' disabled>
-            Price
+          {t('home:price')}
           </option>
-          <option value={orderConstant.asc}>Price low to hight</option>
-          <option value={orderConstant.desc}>Price hight to low</option>
+          <option value={orderConstant.asc}>{t('home:priceLowToHight')}</option>
+          <option value={orderConstant.desc}>{t('home:priceHightToLow')}</option>
         </select>
       </div>
       <div className='flex items-center gap-2'>

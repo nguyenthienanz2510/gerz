@@ -23,7 +23,7 @@ export default function ProductDetail() {
   const { productSlug } = useParams()
   const id = getIdFromProductSlug(productSlug as string)
   const queryClient = useQueryClient()
-  const { t } = useTranslation(['product_detail'])
+  const { t } = useTranslation(['product'])
   const { data } = useQuery({
     queryKey: ['product', id],
     queryFn: () => productApi.getProductDetail(id as string)
@@ -194,7 +194,7 @@ export default function ProductDetail() {
                 <span className='text-16 font-semibold text-color-primary underline'>
                   {formatNumberToSocialStyle(productDetail.sold)}
                 </span>
-                <span className='font-medium text-color-primary'>{t('product_detail:sold')}</span>
+                <span className='font-medium text-color-primary'>{t('product:sold')}</span>
               </div>
             </div>
             <div className='flex flex-wrap items-center gap-x-5'>
@@ -205,7 +205,7 @@ export default function ProductDetail() {
                 {formatCurrency(productDetail.price)} VND
               </span>
               <div className='rounded bg-color-secondary px-1 text-12 font-medium leading-5 text-color-text-light'>
-                Sale {rateSale(productDetail.price_before_discount, productDetail.price)}
+              {t('product:sale')} {rateSale(productDetail.price_before_discount, productDetail.price)}
               </div>
             </div>
             <div className='flex items-center gap-4'>
@@ -218,7 +218,7 @@ export default function ProductDetail() {
                 max={productDetail.quantity}
               />
               <span>
-                {productDetail.quantity} {t('product_detail:inStock')}
+                {productDetail.quantity} {t('product:sold')}
               </span>
             </div>
             <div className='flex gap-2'>
@@ -226,26 +226,26 @@ export default function ProductDetail() {
                 onClick={addToCart}
                 className='rounded border border-color-primary bg-color-primary px-6 py-3 text-16 font-semibold text-color-text-light hover:bg-color-primary-active'
               >
-                Add to cart
+                {t('product:addToCart')}
               </button>
               <button
                 onClick={buyNow}
                 className='rounded border border-color-primary px-6 py-3 text-16 font-semibold text-color-primary hover:border-color-primary-active hover:bg-color-primary-active hover:text-color-text-light'
               >
-                Buy now
+                {t('product:buyNow')}
               </button>
             </div>
           </div>
         </div>
         <div className='mt-10'>
-          <h4 className='text-20 font-semibold'>Product Detail</h4>
+          <h4 className='text-20 font-semibold'>{t('product:productDetail')}</h4>
           <div
             className='description mt-4'
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(productDetail.description) }}
           />
         </div>
         <div className='mt-10'>
-          <h4 className='mb-4 text-20 font-semibold'>You may also like</h4>
+          <h4 className='mb-4 text-20 font-semibold'>{t('product:youMayAlsoLike')}</h4>
           <div className='grid grid-cols-2 gap-x-3 gap-y-4 sm:grid-cols-3 md:grid-cols-4 md:gap-x-5 md:gap-y-7 xl:grid-cols-5'>
             {productsData &&
               productsData.data.data.products.map((product) => {

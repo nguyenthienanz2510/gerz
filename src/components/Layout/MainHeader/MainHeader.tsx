@@ -8,6 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useContext, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import authApi from 'src/apis/auth.api'
 import purchaseApi from 'src/apis/purchase.api'
@@ -29,6 +30,7 @@ export default function MainHeader() {
   const [isFixedHeader, setIsFixedHeader] = useState(false)
   const { isAuthenticated, setIsAuthenticated, userProfile, setUserProfile, extendedPurchases } = useContext(AppContext)
   const HEADER_HEIGHT = 180
+  const { t } = useTranslation(['common'])
 
   useEffect(() => {
     window.scrollY > HEADER_HEIGHT ? setIsFixedHeader(true) : setIsFixedHeader(false)
@@ -154,7 +156,7 @@ export default function MainHeader() {
                   <FontAwesomeIcon icon={faCartShopping} size={'xl'} color={'#feffff'} />
                 </button>
                 <div className='flex flex-col items-center'>
-                  <span>Your cart:</span>
+                  <span>{t('common:yourCart')}:</span>
                   <span className='text-color-text-gray-light'>
                     {purchasesInCart?.length} items - {formatCurrency(totalPurchasesInCart || 0)} VND
                   </span>
@@ -167,7 +169,8 @@ export default function MainHeader() {
                 <div className='flex flex-col border border-color-border-primary-light bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary-light'>
                   <div className='flex flex-col'>
                     <span className='border-b border-color-black py-4 px-5'>
-                      Hello! <span className='text-color-primary'>{userProfile?.name || userProfile?.email}</span>
+                      {t('common:hello')}!{' '}
+                      <span className='text-color-primary'>{userProfile?.name || userProfile?.email}</span>
                     </span>
                   </div>
                   <div className='flex flex-col'>
@@ -175,14 +178,14 @@ export default function MainHeader() {
                       to={path.profile}
                       className='button__hover--primary cursor-pointer border-b border-color-black py-2 px-5'
                     >
-                      Profile
+                      {t('common:profile')}
                     </Link>
                     <span className='flex justify-between gap-x-10 border-b border-color-black py-2 px-5'>
-                      <span>Language</span>
+                      <span>{t('common:language')}</span>
                       <SelectLanguage />
                     </span>
                     <span className='flex justify-between border-b border-color-black py-2 px-5'>
-                      <span className='cursor-default'>Change theme</span>
+                      <span className='cursor-default'>{t('common:changeTheme')}</span>
                       <span className='button__hover--primary ml-5 cursor-pointer'>
                         <SwitchThemeButton />
                       </span>
@@ -191,7 +194,7 @@ export default function MainHeader() {
                       onClick={handleLogoutAccount}
                       className='button__hover--primary flex cursor-pointer justify-between py-2 px-5'
                     >
-                      Logout{' '}
+                      {t('common:logout')}{' '}
                       <FontAwesomeIcon icon={faRightFromBracket} size={'lg'} color={'#feffff'} className='ml-5' />
                     </button>
                   </div>
@@ -203,7 +206,7 @@ export default function MainHeader() {
                   <FontAwesomeIcon icon={faUser} size={'xl'} color={'#feffff'} />
                 </button>
                 <div className='flex flex-col items-center'>
-                  <span>Profile</span>
+                  <span>{t('common:profile')}</span>
                   <span className='text-color-text-gray-light'>{userProfile?.name || userProfile?.email}</span>
                 </div>
               </Link>
@@ -219,10 +222,10 @@ export default function MainHeader() {
               <div className='flex items-center gap-2'>
                 <Link to={path.login} className='button__hover--primary'>
                   <FontAwesomeIcon icon={faRightToBracket} size={'lg'} color={'#feffff'} />
-                  <span className='ml-2'>Login</span>
+                  <span className='ml-2'>{t('common:login')}</span>
                 </Link>
                 <span className='h-4 border-r border-gray-400'></span>
-                <Link to={path.register}>Register</Link>
+                <Link to={path.register}>{t('common:register')}</Link>
               </div>
             </div>
           </div>
