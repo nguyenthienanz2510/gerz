@@ -37,20 +37,23 @@ export default function UserSideNav() {
           </NavLink>
         </li>
         <li>
-          <Link to={path.historyPurchase}>
+          <NavLink
+            to={path.historyPurchase}
+            className={({ isActive }) => (isActive ? 'text-color-primary' : undefined)}
+          >
             <div className='flex items-center justify-start'>
               <FontAwesomeIcon icon={faMoneyCheckDollar} />
               <span className='ml-3 capitalize'>{t('profile:history')}</span>
             </div>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to={path.changePassword}>
+          <NavLink to={path.changePassword} className={({ isActive }) => (isActive ? 'text-color-primary' : undefined)}>
             <div className='flex items-center justify-start'>
               <FontAwesomeIcon icon={faKey} />
               <span className='ml-3 capitalize'>{t('profile:changePassword')}</span>
             </div>
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </div>

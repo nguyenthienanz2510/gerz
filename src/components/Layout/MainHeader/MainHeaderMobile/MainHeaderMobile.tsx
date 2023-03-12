@@ -2,6 +2,7 @@ import { faBars, faCartShopping, faRightFromBracket, faSortDown, faSortUp } from
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMutation } from '@tanstack/react-query'
 import { useContext, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import authApi from 'src/apis/auth.api'
 import logo_main from 'src/assets/images/logos/logo-main.svg'
@@ -13,6 +14,7 @@ import SearchProduct from '../SearchProduct'
 import NavbarMobile from './NavbarMobile'
 
 export default function MainHeaderMobile() {
+  const { t } = useTranslation(['common'])
   const [isOpenNavBar, setIsOpenNavBar] = useState(false)
   const [isUserOpen, setIsUserOpen] = useState(false)
   const { isAuthenticated, setIsAuthenticated, userProfile, setUserProfile } = useContext(AppContext)
@@ -70,7 +72,7 @@ export default function MainHeaderMobile() {
                 handleUserOpen()
               }}
             >
-              <div className='container mx-auto flex items-center justify-between'>
+              <div className='container mx-auto flex items-center justify-between uppercase'>
                 <span>USER</span>
                 {isUserOpen ? (
                   <FontAwesomeIcon icon={faSortUp} size={'lg'} color={'#feffff'} className='translate-y-1' />
@@ -88,7 +90,8 @@ export default function MainHeaderMobile() {
                 <div className='border-b border-color-black py-3 px-3'>
                   <div className='container'>
                     <span>
-                      Hello! <span className='text-color-primary'>{userProfile?.name || userProfile?.email}</span>
+                      {t('common:hello')}!{' '}
+                      <span className='text-color-primary'>{userProfile?.name || userProfile?.email}</span>
                     </span>
                   </div>
                 </div>
@@ -96,7 +99,7 @@ export default function MainHeaderMobile() {
                   to={path.profile}
                   className='button__hover--primary cursor-pointer border-b border-color-black py-3 px-3'
                 >
-                  <div className='container'>Profile</div>
+                  <div className='container'>{t('common:profile')}</div>
                 </Link>
                 <div className='border-b border-color-black py-3 px-3'>
                   <div className='container flex justify-between '>
@@ -106,7 +109,7 @@ export default function MainHeaderMobile() {
                 </div>
                 <div className='border-b border-color-black py-3 px-3'>
                   <div className='container flex justify-between'>
-                    <span className='cursor-default'>Change theme</span>
+                    <span className='cursor-default'>{t('common:changeTheme')}</span>
                     <span className='button__hover--primary ml-5 cursor-pointer'>
                       <SwitchThemeButton />
                     </span>
@@ -114,7 +117,8 @@ export default function MainHeaderMobile() {
                 </div>
                 <button onClick={handleLogoutAccount} className='button__hover--primary cursor-pointer py-3 px-3'>
                   <div className='container flex justify-between'>
-                    Logout <FontAwesomeIcon icon={faRightFromBracket} size={'lg'} color={'#feffff'} className='ml-5' />
+                    {t('common:logout')}{' '}
+                    <FontAwesomeIcon icon={faRightFromBracket} size={'lg'} color={'#feffff'} className='ml-5' />
                   </div>
                 </button>
               </div>
@@ -125,9 +129,9 @@ export default function MainHeaderMobile() {
             <div className='flex items-center border-b-2 border-color-black py-4 text-color-text-light'>
               <div className='container mx-auto flex justify-between'>
                 <div className='flex items-center'>
-                  <Link to={path.login}>Login/</Link>
+                  <Link to={path.login}>{t('common:login')}/</Link>
                   <Link to={path.register} className='ml-1'>
-                    Register
+                    {t('common:register')}
                   </Link>
                 </div>
                 <SwitchThemeButton size={24} />
@@ -135,7 +139,7 @@ export default function MainHeaderMobile() {
             </div>
             <div className='flex items-center border-b-2 border-color-black py-4 text-color-text-light'>
               <div className='container mx-auto flex justify-between'>
-                <span>Language</span>
+                <span>{t('common:language')}</span>
                 <SelectLanguage />
               </div>
             </div>

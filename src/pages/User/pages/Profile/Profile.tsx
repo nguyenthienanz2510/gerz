@@ -1,11 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQuery } from '@tanstack/react-query'
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import userApi from 'src/apis/user.api'
 import Input from 'src/components/Form/Input'
+import InputFile from 'src/components/Form/InputFile'
 import InputNumber from 'src/components/Form/InputNumber'
 import { AppContext } from 'src/context/app.context'
 import { ErrorResponse } from 'src/types/utils.type'
@@ -24,7 +25,6 @@ const profileSchema = userSchema.pick(['name', 'address', 'phone', 'date_of_birt
 export default function Profile() {
   const { t } = useTranslation(['profile'])
   const { setUserProfile, userProfile } = useContext(AppContext)
-  const fileInputRef = useRef<HTMLInputElement>(null)
   const [file, setFile] = useState<File>()
   const previewImage = useMemo(() => {
     return file ? URL.createObjectURL(file) : ''
@@ -108,43 +108,30 @@ export default function Profile() {
     }
   })
 
-  const handleUpload = () => {
-    fileInputRef.current?.click()
-  }
-
-  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const fileFromLocal = event.target.files?.[0]
-    setFile(fileFromLocal)
+  const handleChangeFile = (file?: File) => {
+    setFile(file)
   }
 
   return (
     <div>
       <h1 className='text-28 font-semibold'>{t('profile:myProfile')}</h1>
       <form className='mt-10 flex flex-col gap-10 sm:flex-row' onSubmit={onSubmit}>
-        <div className=''>
-          <div className='flex flex-col items-center justify-center gap-4'>
-            <div className='h-40 w-40 overflow-hidden rounded-full border'>
-              <img
-                src={previewImage || getAvatarURL(userProfile?.avatar)}
-                alt='Avatar'
-                title='Avatar'
-                className='h-40 w-40 object-cover'
-              />
-            </div>
-            <div className='flex flex-col'>
-              <input type='file' className='' accept='.jpg, .jpeg, .png' ref={fileInputRef} onChange={onFileChange} />
-              <button
-                type='button'
-                className='rounded border px-5 py-2 transition-all hover:border-color-primary hover:text-color-primary'
-                onClick={handleUpload}
-              >
-                {t('profile:choseImage')}
-              </button>
-              <span className='mt-4 text-center'>
-                {t('profile:acceptFileTypes')}: <br className='hidden sm:block' />
-                .jpg, .jpeg, .png
-              </span>
-            </div>
+        <div className='flex flex-col items-center justify-center gap-4'>
+          <div className='h-40 w-40 overflow-hidden rounded-full border'>
+            <img
+              src={previewImage || getAvatarURL(userProfile?.avatar)}
+              alt='Avatar'
+              title='Avatar'
+              className='h-40 w-40 object-cover'
+            />
+          </div>
+          <InputFile onchange={handleChangeFile} />
+          <div className='flex flex-col'>
+            <span className='mt-4 text-center'>Max file size: 1MB</span>
+            <span className='mt-2 text-center'>
+              {t('profile:acceptFileTypes')}: <br className='hidden sm:block' />
+              .jpg, .jpeg, .png
+            </span>
           </div>
         </div>
         <div className='flex-1'>
