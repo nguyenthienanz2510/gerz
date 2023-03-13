@@ -64,6 +64,15 @@ function testPrice(this: yup.TestContext<yup.AnyObject>) {
   return price_min !== '' || price_max !== ''
 }
 
+function handleConfirmPasswordYup(refString: string, errorMessage?: string) {
+  return yup
+    .string()
+    .required('Confirm password is require')
+    .min(6, 'Length from 6-160 characters')
+    .max(160, 'Length from 6-160 characters')
+    .oneOf([yup.ref(refString)], errorMessage || 'Confirm password is not same with Password')
+}
+
 // Rules validation using Yup schema validation
 export const schema = yup.object({
   email: yup
@@ -73,12 +82,8 @@ export const schema = yup.object({
     .min(5, 'Length from 5-160 characters')
     .max(160, 'Length from 5-160 characters'),
   password: yup.string().required('').min(6, 'Length from 6-160 characters').max(160, 'Length from 6-160 characters'),
-  confirm_password: yup
-    .string()
-    .required('Confirm password is require')
-    .min(6, 'Length from 6-160 characters')
-    .max(160, 'Length from 6-160 characters')
-    .oneOf([yup.ref('password')], 'Confirm password is not same with Password'),
+  confirm_password: handleConfirmPasswordYup('password'),
+  confirm_new_password: handleConfirmPasswordYup('new_password', 'Confirm new password is not same with new password'),
   price_min: yup.string().test({
     name: 'price-not-allowed',
     message: 'Invalid price',
@@ -100,7 +105,8 @@ export const userSchema = yup.object({
   date_of_birth: yup.date().max(new Date(), 'Invalid Date of birth'),
   password: schema.fields['password'],
   new_password: schema.fields['password'],
-  confirm_password: schema.fields['confirm_password']
+  confirm_password: schema.fields['confirm_password'],
+  confirm_new_password: schema.fields['confirm_new_password']
 })
 
 export type UserSchema = yup.InferType<typeof userSchema>

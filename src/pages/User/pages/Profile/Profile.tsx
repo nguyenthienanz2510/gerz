@@ -34,7 +34,6 @@ export default function Profile() {
     register,
     control,
     handleSubmit,
-    getValues,
     setValue,
     setError,
     formState: { errors }
@@ -93,7 +92,7 @@ export default function Profile() {
       setUserProfile(res.data.data)
       setUserProfileToLocalStorage(res.data.data)
       toast(res.data.message)
-    } catch (err) {
+    } catch (error) {
       if (isAxiosUnprocessableEntityError<ErrorResponse<FormDataError>>(error)) {
         const formError = error.response?.data.data
         if (formError) {
