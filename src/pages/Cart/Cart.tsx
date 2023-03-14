@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import classNames from 'classnames'
 import produce from 'immer'
-import { keyBy } from 'lodash'
+import keyBy from 'lodash/keyBy'
 import React, { useContext, useEffect, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link, useLocation } from 'react-router-dom'
