@@ -95,10 +95,10 @@ export default function MainHeader() {
                 <div className='flex w-[420px] flex-col rounded border border-color-border-primary-light bg-color-bg-dark-primary text-color-text-light shadow-sm shadow-color-border-primary-light'>
                   <div className='flex justify-between border-b border-color-border-primary-light px-3 py-3'>
                     <span>
-                      <strong>New Products Added</strong>
+                      <strong>{t('common:newProductsAdded')}</strong>
                     </span>
                     <Link to={'/cart'} className='text-color-primary hover:underline'>
-                      View cart
+                      {t('common:viewCart')}
                     </Link>
                   </div>
                   <div className='py-2'>
@@ -141,9 +141,9 @@ export default function MainHeader() {
                       </>
                     ) : (
                       <div className='py-5 text-center text-color-text-light'>
-                        No Products in Cart!{' '}
+                        {t('common:noProductsInCart')}!{' '}
                         <Link className='text-color-primary' to={path.home}>
-                          Go to shop now!
+                          {t('common:goToShopNow')}!
                         </Link>
                       </div>
                     )}

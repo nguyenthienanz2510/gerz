@@ -4,6 +4,7 @@ import produce from 'immer'
 import keyBy from 'lodash/keyBy'
 import React, { useContext, useEffect, useMemo } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import purchaseApi from 'src/apis/purchase.api'
@@ -16,6 +17,7 @@ import { formatCurrency, generateProductSlug } from 'src/utils/utils'
 
 export default function Cart() {
   const location = useLocation()
+  const { t } = useTranslation(['product', 'common'])
   const choosenPurchaseIdFromLocation = (location.state as { purchaseId: string } | null)?.purchaseId
 
   const { extendedPurchases, setExtendedPurchases } = useContext(AppContext)
@@ -171,13 +173,13 @@ export default function Cart() {
                 <div className='mr-3 flex-shrink-0'>
                   <input type='checkbox' className='h-4 w-4' checked={isAllChecked} onChange={handleCheckedAll} />
                 </div>
-                <div className='flex-grow'>Product</div>
+                <div className='flex-grow'>{t('product:product')}</div>
               </div>
             </div>
-            <div className='col-span-2'>Unit Price</div>
-            <div className='col-span-2'>Qty</div>
-            <div className='col-span-2'>Total Price</div>
-            <div className='col-span-1'>Action</div>
+            <div className='col-span-2'>{t('product:unitPrice')}</div>
+            <div className='col-span-2'>{t('product:qty')}</div>
+            <div className='col-span-2'>{t('product:totalPrice')}</div>
+            <div className='col-span-1'>{t('product:action')}</div>
           </div>
           {extendedPurchases.length ? (
             <div className='border border-color-border-primary-dark'>
@@ -270,7 +272,7 @@ export default function Cart() {
                         onClick={handleDeletePurchase(index)}
                         className='text-color-danger transition-all hover:font-semibold hover:underline'
                       >
-                        Remove
+                        {t('product:remove')}
                       </button>
                     </div>
                   </div>
@@ -279,9 +281,9 @@ export default function Cart() {
             </div>
           ) : (
             <div className='border border-color-border-primary-dark p-5'>
-              No Products in Cart!{' '}
+              {t('common:noProductsInCart')}!{' '}
               <Link className='text-color-primary' to={path.home}>
-                Go to shop now!
+                {t('common:goToShopNow')}!
               </Link>
             </div>
           )}
@@ -298,25 +300,27 @@ export default function Cart() {
               onChange={handleCheckedAll}
             />
             <label className='cursor-pointer font-semibold' htmlFor='selectAll'>
-              Select All ({purchasesInCart?.length})
+              {t('product:selectAll')} ({purchasesInCart?.length})
             </label>
             <button
               onClick={handleDeletePurchases}
               className='text-color-danger transition-all hover:font-semibold hover:underline'
             >
-              Remove {Boolean(checkedPurchasesCount) && `(${checkedPurchasesCount})`}
+              {t('product:remove')} {Boolean(checkedPurchasesCount) && `(${checkedPurchasesCount})`}
             </button>
           </div>
           <div className='flex flex-col items-start gap-5 sm:flex-row'>
             <div className='flex flex-col gap-1 sm:items-end'>
               <div>
-                <span>Total Payment ({checkedPurchasesCount} Product):</span>
+                <span>
+                  {t('product:totalPayment')} ({checkedPurchasesCount} Product):
+                </span>
                 <span className='ml-2 text-16 font-semibold text-color-secondary'>
                   {formatCurrency(totalCheckedPurchasesPrice)} VND
                 </span>
               </div>
               <div>
-                <span>Saving:</span>
+                <span>{t('product:saving')}:</span>
                 <span className='ml-2'>{formatCurrency(totalCheckedPurchasesSavingPrice)} VND</span>
               </div>
             </div>
@@ -333,7 +337,7 @@ export default function Cart() {
                   }
                 )}
               >
-                Buy Now
+                {t('product:buyNow')}
               </button>
             </div>
           </div>

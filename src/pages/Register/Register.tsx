@@ -13,11 +13,13 @@ import Button from 'src/components/Button'
 import path from 'src/constant/path'
 import authApi from 'src/apis/auth.api'
 import { Helmet } from 'react-helmet-async'
+import { useTranslation } from 'react-i18next'
 
 type FormData = Pick<Schema, 'email' | 'password' | 'confirm_password'>
 const registerSchema = schema.pick(['email', 'password', 'confirm_password'])
 
 export default function Register() {
+  const { t } = useTranslation(['common'])
   const { setIsAuthenticated, setUserProfile } = useContext(AppContext)
 
   const {
@@ -72,26 +74,26 @@ export default function Register() {
   return (
     <div className='w-full rounded-lg bg-white shadow dark:border dark:border-color-border-primary-light dark:bg-color-bg-dark-primary md:mt-0 xl:p-0'>
       <Helmet>
-        <title>Sign Up | Gerz E-Commerce</title>
-        <meta name='description' content='Let’s create your account' />
+        <title>{t('common:signUp')} | Gerz E-Commerce</title>
+        <meta name='description' content={t('common:letsCreateYourAccount')} />
       </Helmet>
       <div className='space-y-4 p-6 sm:p-8 md:space-y-5'>
         <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl'>
-          Sign Up
+          {t('common:signUp')}
         </h1>
-        <p className='text-color-text-gray-dark dark:text-color-text-gray-light'>Let’s create your account</p>
+        <p className='text-color-text-gray-dark dark:text-color-text-gray-light'>{t('common:letsCreateYourAccount')}</p>
         <form className='space-y-5 md:space-y-6' onSubmit={handleOnSubmit} noValidate>
           <Input
             name='email'
             type='email'
-            placeholder='Your email'
+            placeholder={t('common:yourEmail')}
             register={register}
             errorMessage={errors.email?.message}
           />
           <Input
             name='password'
             type='password'
-            placeholder='Password'
+            placeholder={t('common:password')}
             autoComplete='on'
             register={register}
             errorMessage={errors.password?.message}
@@ -99,7 +101,7 @@ export default function Register() {
           <Input
             name='confirm_password'
             type='password'
-            placeholder='Confirm password'
+            placeholder={t('common:confirmPassword')}
             autoComplete='on'
             register={register}
             errorMessage={errors.confirm_password?.message}
@@ -110,12 +112,12 @@ export default function Register() {
             type='submit'
             className='w-full rounded-lg bg-color-primary px-5 py-2.5 text-center text-sm text-color-text-light transition-all hover:bg-color-primary-active focus:bg-color-primary-active'
           >
-            Register
+            {t('common:register')}
           </Button>
           <p className='text-sm font-light text-gray-500 dark:text-gray-400'>
-            Already have an account?{' '}
+            {t('common:alreadyHaveAnAccount')}?{' '}
             <Link to={path.login}>
-              <span className='text-color-primary transition-all hover:underline'>Sign in</span>
+              <span className='text-color-primary transition-all hover:underline'>{t('common:signIn')}</span>
             </Link>
           </p>
         </form>

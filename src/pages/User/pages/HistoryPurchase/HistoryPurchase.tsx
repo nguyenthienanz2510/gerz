@@ -42,8 +42,8 @@ export default function HistoryPurchase() {
                   status: String(tab.status)
                 }).toString()
               }}
-              className={classNames('flex flex-1 items-center justify-center border-b-2 py-4', {
-                'border-b-color-primary text-center text-color-primary': status === tab.status
+              className={classNames('flex flex-1 items-center justify-center border-b-2 py-4 text-center', {
+                'border-b-color-primary text-color-primary': status === tab.status
               })}
             >
               {tab.name}

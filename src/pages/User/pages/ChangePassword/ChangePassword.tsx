@@ -54,18 +54,18 @@ export default function ChangePassword() {
   })
   return (
     <div>
-      <h1 className='text-28 font-semibold'>Change Password</h1>
+      <h1 className='text-28 font-semibold'>{t('profile:changePassword')}</h1>
       <form className='mt-10 flex flex-col gap-10 sm:flex-row' onSubmit={onSubmit}>
         <div className='space-y-6'>
           <div className='grid grid-cols-3'>
             <div className='col-span-1 mr-5'>
-              <span className='leading-10'>Current password:</span>
+              <span className='leading-10'>{t('profile:currentPassword')}:</span>
             </div>
             <div className='col-span-2'>
               <Input
                 register={register}
                 name='password'
-                placeholder='Password'
+                placeholder={t('profile:currentPassword')}
                 errorMessage={errors.password?.message}
                 type='password'
               />
@@ -73,13 +73,13 @@ export default function ChangePassword() {
           </div>
           <div className='grid grid-cols-3'>
             <div className='col-span-1 mr-5'>
-              <span className='leading-10'>New password:</span>
+              <span className='leading-10'>{t('profile:newPassword')}:</span>
             </div>
             <div className='col-span-2'>
               <Input
                 register={register}
                 name='new_password'
-                placeholder='New password'
+                placeholder={t('profile:newPassword')}
                 errorMessage={errors.new_password?.message}
                 type='password'
               />
@@ -87,13 +87,13 @@ export default function ChangePassword() {
           </div>
           <div className='grid grid-cols-3'>
             <div className='col-span-1 mr-5'>
-              <span className='leading-10'>Retype new password:</span>
+              <span className='leading-10'>{t('profile:retypeNewPassword')}:</span>
             </div>
             <div className='col-span-2'>
               <Input
                 register={register}
                 name='confirm_new_password'
-                placeholder='Confirm new password'
+                placeholder={t('profile:retypeNewPassword')}
                 errorMessage={errors.confirm_new_password?.message}
                 type='password'
               />
